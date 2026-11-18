@@ -1,0 +1,247 @@
+{
+ "Icon Set": {
+  "card": [
+   57.2,
+   62.2,
+   12.8,
+   2.2
+  ],
+  "canvas": [
+   20.6,
+   13.9,
+   58.6,
+   78.7
+  ],
+  "run_btn": [
+   91.6,
+   7.6,
+   3.7,
+   4.9
+  ],
+  "dialog": [
+   30.6,
+   23.2,
+   38.9,
+   53.6
+  ],
+  "theme": [
+   32.3,
+   71.0,
+   35.4,
+   6.4
+  ],
+  "check": [
+   59.3,
+   79.2,
+   8.4,
+   4.9
+  ],
+  "cost_dialog": [
+   30.6,
+   23.1,
+   38.9,
+   53.8
+  ],
+  "confirm": [
+   64.0,
+   69.2,
+   3.7,
+   4.9
+  ],
+  "cost_text": "Run Icon Set?\n\nCheck the cost, then run. Nothing is charged until you run.\n\nInputs\n1 image ready \u00b7 1 answer filled in \u00b7 all set\nWhat runs\n12 steps \u00b7 1 item \u00b7 48\u2013198 credits\nWorst case includes automatic retries (up to 2 quality retries per item). You're only charged for what actually runs.\nYour balance\n9,869 credits \u2192 at least 9,671 left\nRun\nGo back\n\nPreview applies when you add more than 2 images",
+  "run_url": "https://rapidassets.ai/workflows/33d0723b-dfcd-42db-9602-54076d5d3988/runs/0f6bd5e2-0270-460c-9e91-51b6f36c1ab5",
+  "status": null,
+  "downloads": [
+   75.3,
+   50.8,
+   21.2,
+   2.2
+  ]
+ },
+ "Parallel Pose Edits": {
+  "card": [
+   43.6,
+   82.4,
+   12.8,
+   2.2
+  ],
+  "canvas": [
+   20.6,
+   13.9,
+   58.6,
+   78.7
+  ],
+  "run_btn": [
+   91.6,
+   7.6,
+   3.7,
+   4.9
+  ],
+  "dialog": [
+   30.6,
+   29.0,
+   38.9,
+   42.0
+  ],
+  "check": [
+   59.3,
+   73.4,
+   8.4,
+   4.9
+  ],
+  "cost_dialog": [
+   30.6,
+   23.1,
+   38.9,
+   53.8
+  ],
+  "confirm": [
+   64.0,
+   69.2,
+   3.7,
+   4.9
+  ],
+  "cost_text": "Run Parallel Pose Edits?\n\nCheck the cost, then run. Nothing is charged until you run.\n\nInputs\n1 image ready \u00b7 all set\nWhat runs\n2 steps \u00b7 1 item \u00b7 6\u201348 credits\nWorst case includes automatic retries (up to 2 quality retries per item). You're only charged for what actually runs.\nYour balance\n9,740 credits \u2192 at least 9,692 left\nRun\nGo back\n\nPreview applies when you add more than 2 images.\n\nQuality ch",
+  "run_url": "https://rapidassets.ai/workflows/6390095d-c16d-4459-9f1d-24270d9de907/runs/823a7c17-319a-4af5-8083-ce1997542068",
+  "status": [
+   26.7,
+   16.8,
+   6.1,
+   2.2
+  ],
+  "downloads": [
+   75.3,
+   50.8,
+   21.2,
+   2.2
+  ]
+ },
+ "Parallel Image Variations": {
+  "card": [
+   57.2,
+   82.4,
+   12.8,
+   2.2
+  ],
+  "canvas": [
+   20.6,
+   13.9,
+   58.6,
+   78.7
+  ],
+  "run_btn": [
+   91.6,
+   7.6,
+   3.7,
+   4.9
+  ],
+  "dialog": [
+   30.6,
+   29.0,
+   38.9,
+   42.0
+  ],
+  "check": [
+   59.3,
+   73.4,
+   8.4,
+   4.9
+  ],
+  "cost_dialog": [
+   30.6,
+   23.1,
+   38.9,
+   53.8
+  ],
+  "confirm": [
+   64.0,
+   69.2,
+   3.7,
+   4.9
+  ],
+  "cost_text": "Run Parallel Image Variations?\n\nCheck the cost, then run. Nothing is charged until you run.\n\nInputs\n1 image ready \u00b7 all set\nWhat runs\n2 steps \u00b7 1 item \u00b7 10\u201348 credits\nWorst case includes automatic retries (up to 2 quality retries per item). You're only charged for what actually runs.\nYour balance\n9,677 credits \u2192 at least 9,629 left\nRun\nGo back\n\nPreview applies when you add more than 2 images.\n\nQua",
+  "run_url": "https://rapidassets.ai/workflows/7c4bda71-053d-4516-bafa-7ba2bb056439/runs/b6344331-7dae-4ee7-b906-cb65740d3de3",
+  "status": [
+   26.7,
+   16.8,
+   6.1,
+   2.2
+  ],
+  "downloads": [
+   75.3,
+   52.6,
+   21.2,
+   2.2
+  ],
+  "keep": [
+   19.9,
+   170.9,
+   11.6,
+   4.9
+  ]
+ },
+ "Pose Transfer": {
+  "card": [
+   29.9,
+   58.3,
+   12.8,
+   2.2
+  ],
+  "canvas": [
+   20.6,
+   13.9,
+   58.6,
+   78.7
+  ],
+  "run_btn": [
+   91.6,
+   7.6,
+   3.7,
+   4.9
+  ],
+  "dialog": [
+   30.6,
+   23.9,
+   38.9,
+   52.2
+  ],
+  "check": [
+   59.3,
+   79.2,
+   8.4,
+   4.9
+  ],
+  "cost_dialog": [
+   30.6,
+   23.1,
+   38.9,
+   53.8
+  ],
+  "confirm": [
+   64.0,
+   69.2,
+   3.7,
+   4.9
+  ],
+  "cost_text": "Run Pose Transfer?\n\nCheck the cost, then run. Nothing is charged until you run.\n\nInputs\n1 image ready \u00b7 1 reference picture \u00b7 all set\nWhat runs\n1 step \u00b7 1 item \u00b7 8\u201324 credits\nWorst case includes automatic retries (up to 2 quality retries per item). You're only charged for what actually runs.\nYour balance\n9,586 credits \u2192 at least 9,562 left\nRun\nGo back\n\nPreview applies when you add more than 2 imag",
+  "run_url": "https://rapidassets.ai/workflows/97c01213-f9d8-4db9-b140-73997f611950/runs/82d320d7-a3ca-4120-8583-ece370a0fa77",
+  "status": [
+   26.7,
+   16.8,
+   6.1,
+   2.2
+  ],
+  "downloads": [
+   75.3,
+   52.6,
+   21.2,
+   2.2
+  ],
+  "keep": [
+   19.9,
+   167.3,
+   11.6,
+   4.9
+  ]
+ }
+}

@@ -1,0 +1,875 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rapid Assets Interactive Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#090a0a; --panel:#121314; --panel2:#1a1b1d; --line:rgba(255,255,255,.08); --line2:rgba(255,255,255,.14);
+  --fg:#f2f2f2; --muted:#9a9a9a; --dim:#6b6b6b; --orange:#f97316; --orange2:#ff8a3d; --green:#22c55e;
+  --u:10px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%;background:var(--bg);color:var(--fg);font-family:Inter,"Segoe UI",system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+.app{display:grid;grid-template-columns:260px 1fr;height:100vh;overflow:hidden}
+
+/* chapter rail */
+.rail{border-right:1px solid var(--line);background:var(--panel);display:flex;flex-direction:column;min-height:0}
+.brand{padding:20px 20px 14px;display:flex;align-items:center;gap:10px}
+.logo{width:28px;height:28px;border-radius:8px;background:var(--orange);display:grid;place-items:center;font-weight:700;color:#111;font-family:"Inter Tight",Inter,sans-serif}
+.brand b{font-family:"Inter Tight",Inter,sans-serif;font-size:15px;letter-spacing:.2px}
+.brand span{display:block;font-size:11.5px;color:var(--muted);margin-top:1px}
+.chapters{padding:6px 10px 16px;overflow:auto;flex:1}
+.grp{font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--orange);font-weight:600;padding:14px 12px 4px}
+.chap{width:100%;text-align:left;display:flex;gap:12px;align-items:flex-start;padding:11px 12px;border-radius:12px;margin:2px 0;transition:background .2s}
+.chap:hover{background:rgba(255,255,255,.04)}
+.chap .n{flex:none;width:24px;height:24px;border-radius:50%;border:1px solid var(--line2);display:grid;place-items:center;font-size:12px;color:var(--muted);transition:all .3s}
+.chap .t{font-size:14px;font-weight:500;line-height:1.25}
+.chap .s{font-size:11.5px;color:var(--dim);margin-top:3px}
+.chap.active{background:rgba(249,115,22,.10)}
+.chap.active .n{background:var(--orange);border-color:var(--orange);color:#111;font-weight:600}
+.chap.done .n{border-color:rgba(34,197,94,.5);color:var(--green)}
+.chap .bar{height:2px;background:var(--line);border-radius:2px;margin-top:8px;overflow:hidden;width:150px}
+.chap .bar i{display:block;height:100%;width:0;background:var(--orange);transition:width .5s}
+.rail-foot{padding:14px 18px;border-top:1px solid var(--line);font-size:11.5px;color:var(--dim);line-height:1.5}
+.rail-foot kbd{font-family:inherit;font-size:10.5px;border:1px solid var(--line2);border-bottom-width:2px;border-radius:5px;padding:0 5px;color:var(--muted)}
+
+/* main */
+.main{display:flex;flex-direction:column;align-items:center;min-width:0;min-height:0;padding:18px 24px 14px;gap:14px}
+.window{width:min(100%, calc((100vh - 250px) * 1.6 + 2px));border:1px solid var(--line2);border-radius:14px;overflow:hidden;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.chrome{height:34px;display:flex;align-items:center;gap:7px;padding:0 12px;background:#161718;border-bottom:1px solid var(--line)}
+.chrome i{width:10px;height:10px;border-radius:50%;background:#3a3b3d}
+.url{margin-left:10px;flex:1;max-width:420px;height:22px;border-radius:7px;background:#0e0f10;border:1px solid var(--line);display:flex;align-items:center;gap:6px;padding:0 10px;font-size:11.5px;color:var(--muted)}
+.url svg{width:11px;height:11px;opacity:.6}
+.stage{position:relative;width:100%;aspect-ratio:16/10;overflow:hidden;background:#090a0a}
+.cam{position:absolute;inset:0;transform-origin:0 0;transition:transform 1s cubic-bezier(.45,.05,.2,1)}
+.shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .45s ease}
+.shot.on{opacity:1}
+
+.ring{position:absolute;border-radius:calc(var(--u)*.7);border:2px solid var(--orange);box-shadow:0 0 0 9999px rgba(4,5,6,.52),0 0 calc(var(--u)*2) rgba(249,115,22,.45);
+  transition:left .7s cubic-bezier(.45,.05,.2,1),top .7s cubic-bezier(.45,.05,.2,1),width .7s cubic-bezier(.45,.05,.2,1),height .7s cubic-bezier(.45,.05,.2,1),opacity .35s;opacity:0;pointer-events:none}
+.ring.on{opacity:1}
+.ring::after{content:"";position:absolute;inset:-6px;border-radius:inherit;border:2px solid rgba(249,115,22,.55);animation:pulse 1.6s ease-out infinite}
+@keyframes pulse{0%{opacity:.9;transform:scale(1)}100%{opacity:0;transform:scale(1.12)}}
+.ring .tag{position:absolute;left:50%;top:-6px;transform:translate(-50%,-100%);background:var(--orange);color:#140a02;font-weight:600;font-size:calc(var(--u)*.85);padding:.25em .7em;border-radius:99px;white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.4)}
+.ring.below .tag{top:auto;bottom:-6px;transform:translate(-50%,100%)}
+.ring.try{pointer-events:auto;cursor:pointer}
+
+.knob{position:absolute;width:calc(var(--u)*.62);height:calc(var(--u)*.62);margin:calc(var(--u)*-.31) 0 0 calc(var(--u)*-.31);border-radius:50%;background:var(--orange);border:2px solid #fff;opacity:0;transition:left 1.3s cubic-bezier(.45,.05,.2,1),opacity .2s;z-index:4;pointer-events:none}
+.knob.on{opacity:1}
+.typer{position:absolute;background:#1a1b1d;color:#f1f1f1;display:flex;align-items:center;white-space:nowrap;overflow:hidden;font-family:Inter,"Segoe UI",sans-serif;opacity:0;transition:opacity .25s;padding-left:.15em}
+.typer.on{opacity:1}
+.typer.wrap{white-space:pre-wrap;align-items:flex-start;line-height:1.35;padding:.25em .35em;overflow:hidden}
+.typer .caret{display:inline-block;width:2px;height:1.1em;background:var(--orange);margin-left:1px;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+
+.cursor{position:absolute;width:calc(var(--u)*2.1);height:auto;pointer-events:none;z-index:5;transform-origin:2px 2px;
+  transition:left .85s cubic-bezier(.45,.05,.2,1),top .85s cubic-bezier(.45,.05,.2,1),opacity .3s;filter:drop-shadow(0 3px 6px rgba(0,0,0,.6))}
+.cursor svg{width:100%;height:auto;display:block;transition:transform .12s}
+.cursor.press svg{transform:scale(.82)}
+.ripple{position:absolute;width:calc(var(--u)*5);height:calc(var(--u)*5);margin:calc(var(--u)*-2.5) 0 0 calc(var(--u)*-2.5);border-radius:50%;border:3px solid var(--orange);pointer-events:none;animation:rip .65s ease-out forwards;z-index:4}
+@keyframes rip{from{transform:scale(.15);opacity:1}to{transform:scale(1);opacity:0}}
+
+/* overlays */
+.cover{position:absolute;inset:0;display:grid;place-items:center;z-index:20;background:rgba(6,7,8,.72);backdrop-filter:blur(6px);transition:opacity .4s}
+.cover.hide{opacity:0;pointer-events:none}
+.cover .box{text-align:center;max-width:620px;padding:0 24px}
+.eyebrow{color:var(--orange);font-size:12px;letter-spacing:.18em;font-weight:600;text-transform:uppercase}
+.cover h1{font-family:"Inter Tight",Inter,sans-serif;font-size:clamp(26px,3.4vw,44px);line-height:1.08;margin:12px 0 12px;letter-spacing:-.02em}
+.cover p{color:#c9c9c9;font-size:clamp(14px,1.25vw,16.5px);line-height:1.55;margin:0 auto 24px;max-width:520px}
+.cta{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+.btn{height:44px;padding:0 20px;border-radius:12px;font-weight:600;font-size:14.5px;display:inline-flex;align-items:center;gap:9px;transition:transform .15s,background .2s}
+.btn:active{transform:scale(.97)}
+.btn.primary{background:var(--orange);color:#160b02}
+.btn.primary:hover{background:var(--orange2)}
+.btn.ghost{border:1px solid var(--line2);background:rgba(255,255,255,.03)}
+.btn.ghost:hover{background:rgba(255,255,255,.07)}
+.btn svg{width:16px;height:16px}
+
+/* caption + controls */
+.dock{width:min(100%, calc((100vh - 250px) * 1.6 + 2px));display:grid;grid-template-columns:1fr auto;gap:18px;align-items:center}
+.cap{min-height:74px}
+.cap .meta{display:flex;gap:10px;align-items:center;font-size:11.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);font-weight:600}
+.cap .meta .count{color:var(--dim);letter-spacing:.04em}
+.cap h2{font-family:"Inter Tight",Inter,sans-serif;font-size:21px;margin:5px 0 4px;letter-spacing:-.01em}
+.cap p{margin:0;color:#c4c4c4;font-size:14.5px;line-height:1.5;max-width:760px}
+.cap .hint{display:inline-block;margin-top:7px;font-size:12.5px;color:var(--orange2);opacity:0;transition:opacity .3s}
+.cap .hint.on{opacity:1}
+.fade{animation:fadeup .45s ease both}
+@keyframes fadeup{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ctrls{display:flex;flex-direction:column;gap:9px;align-items:flex-end}
+.row{display:flex;gap:6px;align-items:center}
+.ib{width:40px;height:40px;border-radius:11px;border:1px solid var(--line2);display:grid;place-items:center;background:rgba(255,255,255,.03);transition:background .2s}
+.ib:hover{background:rgba(255,255,255,.08)}
+.ib svg{width:17px;height:17px}
+.ib.play{background:var(--orange);border-color:var(--orange);color:#160b02;width:46px}
+.seg{display:flex;border:1px solid var(--line2);border-radius:10px;overflow:hidden;font-size:12.5px}
+.seg button{padding:6px 11px;color:var(--muted)}
+.seg button.on{background:rgba(249,115,22,.16);color:var(--fg)}
+.progress{width:100%;height:3px;background:var(--line);border-radius:3px;overflow:hidden;grid-column:1/-1}
+.progress i{display:block;height:100%;width:0;background:linear-gradient(90deg,var(--orange),var(--orange2));transition:width .5s}
+
+@media (max-width: 980px){
+  .app{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .rail{border-right:0;border-bottom:1px solid var(--line)}
+  .chapters{display:flex;overflow-x:auto;padding:4px 10px 10px;gap:4px}
+  .chap{min-width:170px}
+  .chap .bar{width:110px}
+  .rail-foot{display:none}
+  .main{padding:12px 14px}
+  .window,.dock{width:100%}
+  .dock{grid-template-columns:1fr}
+  .ctrls{align-items:flex-start}
+}
+
+/* ---- full-screen layout ---- */
+:root{--dockh:78px}
+.app{display:block;height:100vh;overflow:hidden}
+.rail{position:fixed;left:0;top:0;bottom:0;width:320px;z-index:60;transform:translateX(-102%);transition:transform .32s cubic-bezier(.4,0,.2,1);box-shadow:24px 0 60px rgba(0,0,0,.6)}
+.rail.open{transform:none}
+.scrim{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:55;opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.on{opacity:1;pointer-events:auto}
+.main{height:100vh;padding:0;gap:0;display:flex;flex-direction:column;align-items:stretch}
+.stagewrap{flex:1;min-height:0;display:flex;align-items:center;justify-content:center;background:#000}
+.window{width:min(100vw, calc((100vh - var(--dockh)) * 1.6));border:0;border-radius:0;box-shadow:none}
+.chrome{display:none}
+.dock{width:100%;height:var(--dockh);display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:center;padding:0 18px;background:#0c0d0e;border-top:1px solid var(--line);position:relative}
+.dock .progress{position:absolute;left:0;right:0;top:-1px;height:3px;border-radius:0}
+.cap{min-height:0;overflow:hidden}
+.cap .meta{font-size:10.5px}
+.cap h2{font-size:17px;margin:2px 0 1px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cap p{font-size:13.5px;line-height:1.38;max-width:none;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.cap .hint{position:absolute;right:18px;top:-30px;margin:0;background:var(--orange);color:#160b02;font-weight:600;padding:4px 10px;border-radius:99px;font-size:12px}
+.ctrls{flex-direction:row;align-items:center;gap:10px}
+.lbtn{height:40px;padding:0 14px;border-radius:11px;border:1px solid var(--line2);background:rgba(255,255,255,.03);display:inline-flex;align-items:center;gap:8px;font-size:13.5px;font-weight:500;white-space:nowrap}
+.lbtn:hover{background:rgba(255,255,255,.08)}
+.lbtn svg{width:16px;height:16px}
+.lbtn .cn{color:var(--orange);font-weight:600}
+@media (max-width: 980px){
+  :root{--dockh:120px}
+  .dock{grid-template-columns:1fr;grid-template-rows:auto auto;padding:8px 12px;gap:6px;height:var(--dockh)}
+  .dock .lbtn.chap-btn{position:absolute;top:8px;right:12px}
+  .ctrls{justify-content:flex-start}
+  .rail{width:86vw}
+  .chapters{display:block}
+}
+
+/* ---- compact permanent left rail ---- */
+:root{--railw:212px}
+.app{display:grid;grid-template-columns:var(--railw) 1fr;height:100vh;overflow:hidden}
+.rail{position:static;transform:none!important;width:auto;box-shadow:none;z-index:auto;transition:none}
+.scrim{display:none!important}
+.chap-btn{display:none!important}
+.brand{padding:12px 12px 8px;gap:8px}
+.logo{width:22px;height:22px;border-radius:6px;font-size:12px}
+.brand b{font-size:12.5px}
+.brand span{font-size:10px}
+.chapters{padding:2px 6px 10px}
+.grp{font-size:9px;padding:9px 8px 2px;letter-spacing:.12em}
+.chap{gap:8px;padding:5px 8px;border-radius:8px;margin:1px 0;align-items:center}
+.chap .n{width:17px;height:17px;font-size:9.5px}
+.chap .t{font-size:11.5px;line-height:1.2}
+.chap .s{display:none}
+.chap .bar{width:120px;margin-top:3px;height:2px}
+.rail-foot{padding:8px 10px;font-size:9.5px;line-height:1.6}
+.rail-foot kbd{font-size:9px;padding:0 4px}
+.window{width:min(calc(100vw - var(--railw)), calc((100vh - var(--dockh)) * 1.6))}
+.dock{grid-template-columns:1fr auto}
+.cap h2{font-size:15.5px}
+.cap p{font-size:12.5px}
+.cap .meta{font-size:9.5px}
+.lbtn{height:34px;padding:0 11px;font-size:12px}
+.ib{width:34px;height:34px;border-radius:9px}
+.ib.play{width:40px}
+.ib svg{width:15px;height:15px}
+.seg{font-size:11.5px}
+.seg button{padding:5px 9px}
+:root{--dockh:66px}
+@media (max-width: 980px){
+  .app{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .chapters{display:flex;overflow-x:auto}
+  .chap{min-width:140px}
+  .grp{display:none}
+}
+
+/* ---- narration ---- */
+.narr{position:absolute;left:50%;transform:translateX(-50%);bottom:3.5%;width:min(76%,1180px);z-index:8;
+  background:rgba(9,10,11,.88);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.09);border-left:5px solid var(--orange);border-radius:16px;
+  padding:calc(var(--u)*1.05) calc(var(--u)*1.6) calc(var(--u)*1.2);box-shadow:0 22px 60px rgba(0,0,0,.6);
+  opacity:0;transition:opacity .35s ease;pointer-events:none}
+.narr.on{opacity:1}
+.narr.top{bottom:auto;top:3.5%}
+.narr.left{left:2.5%;transform:none;width:min(60%,1000px)}
+.narr.right{left:auto;right:2.5%;transform:none;width:min(60%,1000px)}
+.narr .nk{font-size:calc(var(--u)*.78);letter-spacing:.16em;text-transform:uppercase;color:var(--orange);font-weight:700;margin-bottom:.3em}
+.narr .nt{font-family:"Inter Tight",Inter,sans-serif;font-weight:700;color:#fff;font-size:calc(var(--u)*1.6);line-height:1.15;margin-bottom:.4em}
+.narr .nl{color:#ececec;font-size:calc(var(--u)*1.22);line-height:1.5;margin:.15em 0}
+.narr .nl b{color:var(--orange2);font-weight:800;letter-spacing:.05em;margin-right:.45em;font-size:.86em}
+.narr .w{opacity:.08;transition:opacity .22s ease}
+.narr .w.on{opacity:1}
+.cap p{display:none}
+.vbtn.on{background:rgba(249,115,22,.16);border-color:var(--orange)}
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="rail">
+    <div class="brand"><div class="logo">R</div><div><b>Rapid Assets</b><span>Interactive guide</span></div></div>
+    <nav class="chapters" id="chapters"></nav>
+    <div class="rail-foot"><kbd>←</kbd> <kbd>→</kbd> step &nbsp; <kbd>Space</kbd> play / pause<br><kbd>T</kbd> Watch / Try it &nbsp; <kbd>V</kbd> voice &nbsp; <kbd>F</kbd> full screen</div>
+  </aside>
+  <div class="scrim" id="scrim"></div>
+  <main class="main">
+    <div class="stagewrap"><div class="window">
+      <div class="chrome"><i></i><i></i><i></i>
+        <div class="url"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span id="url">rapidassets.ai/home</span></div>
+      </div>
+      <div class="stage" id="stage">
+        <div class="cam" id="cam">
+          <img class="shot on" id="shotA" alt="">
+          <img class="shot" id="shotB" alt="">
+          <video class="shot" id="clip" muted loop playsinline preload="auto"></video>
+          <div class="knob" id="knob"></div>
+          <div class="typer" id="typer"><span id="typed"></span><span class="caret"></span></div>
+          <div class="ring" id="ring"><span class="tag" id="tag">Click</span></div>
+          <div class="cursor" id="cursor"><svg viewBox="0 0 28 32"><path d="M3 2 L3 25 L9 19.5 L13.2 29 L17.4 27.2 L13.3 17.9 L21.5 17.9 Z" fill="#fff" stroke="#111" stroke-width="1.6" stroke-linejoin="round"/></svg></div>
+        </div>
+        <div class="narr" id="narr"><div class="nk" id="nk"></div><div class="nt" id="nt"></div><div id="nb"></div></div>
+        <div class="cover" id="intro">
+          <div class="box">
+            <div class="eyebrow">Rapid Assets · Interactive guide</div>
+            <h1>Make game assets in a few clicks</h1>
+            <p>Watch how the Studio works, from your first image to an animated 3D character. Or take the controls and click through it yourself.</p>
+            <div class="cta">
+              <button class="btn primary" id="startWatch"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>Watch the tour</button>
+              <button class="btn ghost" id="startTry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 3l7 17 2.5-7.5L21 10z"/></svg>Try it yourself</button>
+            </div>
+          </div>
+        </div>
+        <div class="cover hide" id="outro">
+          <div class="box">
+            <div class="eyebrow">That's the tour</div>
+            <h1>You're ready to make assets</h1>
+            <p>Images, edits, sprite sheets, 3D models, rigs and animations, all in one project. Pick a chapter on the left to see any part again.</p>
+            <div class="cta">
+              <a class="btn primary" href="https://rapidassets.ai" target="_blank" rel="noopener" style="text-decoration:none">Open Rapid Assets</a>
+              <button class="btn ghost" id="replay">Watch again</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+    <div class="dock">
+      <button class="lbtn chap-btn" id="chapBtn" title="Chapters (C)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>Chapters <span class="cn" id="chapNo"></span></button>
+      <div class="cap" id="cap">
+        <div class="meta"><span id="chapName">Start here</span><span class="count" id="count"></span></div>
+        <h2 id="title">Welcome</h2>
+        <p id="text">Press Watch the tour to begin.</p>
+        <span class="hint" id="hint">Your turn: click the highlighted spot</span>
+      </div>
+      <div class="ctrls">
+        <div class="row">
+          <button class="ib" id="prev" title="Back (←)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M15 6l-6 6 6 6"/></svg></button>
+          <button class="ib play" id="play" title="Play / pause (Space)"><svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></button>
+          <button class="ib" id="next" title="Next (→)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></button>
+        </div>
+        <div class="row">
+          <button class="lbtn vbtn" id="voiceBtn" title="Read the captions aloud (V)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 5.5a9 9 0 0 1 0 13"/></svg>Voice</button>
+          <button class="lbtn" id="fsBtn" title="Full screen (F)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg>Full screen</button>
+          <div class="seg" id="mode"><button data-m="watch" class="on">Watch</button><button data-m="try">Try it</button></div>
+          <div class="seg" id="speed"><button data-s="1" class="on">1×</button><button data-s="1.5">1.5×</button><button data-s="2">2×</button></div>
+        </div>
+      </div>
+      <div class="progress"><i id="prog"></i></div>
+    </div>
+  </main>
+</div>
+
+<script>
+const IMG = /*IMAGES*/{};
+const VIDS = /*VIDS*/{};
+const URLS = {p1_home:"rapidassets.ai/home", p1_sidebar_tools:"rapidassets.ai/home", p3_tools_3d:"rapidassets.ai/manual/3d-generator"};
+const urlFor = n => URLS[n] || "rapidassets.ai/studio";
+
+const CH = [
+  {id:"start", name:"Start here", sub:"Home, sidebar, tools"},
+  {id:"first", name:"Your first image", sub:"Describe, approve, done"},
+  {id:"controls", name:"Studio controls", sub:"+ menu, type, modes, recipes"},
+  {id:"3d", name:"Make it 3D", sub:"Prompt: T-pose, cut-out, 3D"},
+  {id:"anim", name:"Rig & animate", sub:"Rig, prompt, tune, lock, check"},
+  {id:"view", name:"View, download & edit", sub:"Viewer, Redo, Edit view"},
+  {id:"rec", name:"Recipes", sub:"One-click jobs in the chat"},
+  {id:"wf", name:"How workflows work", sub:"Batch Variations · real run", group:"Workflows"},
+  {id:"t_background_removal", name:"Background Removal", sub:"3 steps · real run", group:"Workflows"},
+  {id:"t_character_facial_pose_sheet", name:"Character Facial Pose Sheet", sub:"3 steps · real run", group:"Workflows"},
+  {id:"t_character_turnaround", name:"Character Turnaround", sub:"3 steps · real run", group:"Workflows"},
+  {id:"t_color_palette_extraction", name:"Color Palette Extraction", sub:"4 steps · real run", group:"Workflows"},
+  {id:"t_icon_set", name:"Icon Set", sub:"15 steps · real run", group:"Workflows"},
+  {id:"t_image_analysis", name:"Image Analysis", sub:"4 steps · real run", group:"Workflows"},
+  {id:"t_parallel_pose_edits", name:"Parallel Pose Edits", sub:"4 steps · real run", group:"Workflows"},
+  {id:"t_parallel_image_variations", name:"Parallel Image Variations", sub:"4 steps · real run", group:"Workflows"},
+  {id:"t_pose_transfer", name:"Pose Transfer", sub:"4 steps · real run", group:"Workflows"},
+  {id:"t_texture_3d_model", name:"Texture 3D Model", sub:"4 steps · real run", group:"Workflows"},
+  {id:"t_tileset", name:"Tileset", sub:"8 steps · real run", group:"Workflows"},
+  {id:"t_ui_kit", name:"UI Kit", sub:"21 steps · real run", group:"Workflows"},
+  {id:"t_seasonal_re_theme", name:"Seasonal Re-theme", sub:"7 steps · set the theme", group:"Workflows"},
+  {id:"sprites", name:"Sprite sheets", sub:"Animate a 2D character", group:"2D animation"},
+];
+
+// t = target [x,y,w,h] in % of the screenshot. act: look | click | type. z = camera zoom.
+const STEPS = [
+ {ch:"start", img:"p1_home", act:"look", t:[0.6,1.6,14.6,96.6], z:1, title:"Home and the sidebar", text:"After you sign in you land on Home. The sidebar takes you everywhere: Studio, Workflows, Tools, Projects, Shared with me and the Gallery."},
+ {ch:"start", img:"p1_home", act:"look", t:[49,21.2,9.9,4.5], z:1.3, title:"Ask the agent, or pick a tool", text:"Ask the agent: describe it and the agent plans and makes it. Pick a tool: choose the model and every setting yourself."},
+ {ch:"start", img:"p1_sidebar_tools", act:"click", t:[2.8,30.6,11.8,3.9], ring2:[15.3,31,13.4,19.2], z:1.35, title:"Tools", text:"Tools opens the Image, Edit, 3D and Video forms for full control over one job."},
+
+ {ch:"first", img:"p1_home", act:"type", t:[31.8,28.2,52.6,13.4], box:[32.6,29.7,49.5,4], fs:1.05, z:1.25, type:"a cheerful young knight hero with a blue cape, full body, T-pose", title:"Describe what you want", text:"Type your idea in plain words: what it is, the style, the pose."},
+ {ch:"first", img:"p1_home", act:"click", keep:true, t:[80.4,36,3.4,4.6], z:1.35, title:"Send it", text:"Press Enter or the orange arrow. The Studio opens and the agent gets to work."},
+ {ch:"first", img:"p2_spec_setup", act:"click", t:[38.4,58.6,6.8,3.9], z:1.25, title:"A new project asks for a style", text:"Lock a Style Spec so every asset in the project matches, or choose Skip for now."},
+ {ch:"first", img:"p2_plan_card", act:"look", t:[17.6,15.8,29.2,50], z:1.2, title:"Check the plan", text:"In Plan mode nothing is made until you approve. The card shows the step, the model, the size and the cost: Total ≈ 8 credits."},
+ {ch:"first", img:"p2_plan_card", act:"click", t:[21.8,48.9,23.9,4], z:1.35, title:"Approve it", text:"Click Yes, generate. You can also edit the plan, or tell the AI what to change."},
+ {ch:"first", img:"p2_working", act:"look", t:[17.8,23.6,22.6,40.4], z:1.2, title:"It works while you wait", text:"The chat shows progress. You can type your next idea already; it waits in line."},
+ {ch:"first", img:"p2_chat_result", act:"look", t:[49.5,13.4,12,19.2], z:1.25, title:"Your image is ready", text:"It shows up in the chat and in Media on the right, saved to the project."},
+ {ch:"first", img:"p2_chat_result", act:"look", t:[17.6,30.6,29,21.6], z:1.3, title:"Take it further", text:"Next steps sit under every result: Turnaround, Expressions, Poses, Redo, Edit precisely, Make it 3D. Each one shows its cost."},
+
+ {ch:"controls", img:"p2_plus_menu", act:"click", t:[18.7,82,2.7,4.7], ring2:[19.3,49.4,16.6,31.7], z:1.3, title:"The + menu", text:"Add a reference image, upload a 3D model, set the size, ask for exact text, pick a tool, or search the web or a game's style."},
+ {ch:"controls", img:"p2_type_picker", act:"click", t:[22,82.2,5,4.5], ring2:[21.8,46.4,12.5,34.2], z:1.3, title:"Say what kind of asset it is", text:"Character, Prop, Building, Environment, UI, Icon, Texture or Tileset. Props, UI and icons come on a transparent background."},
+ {ch:"controls", img:"p1_mode_pill", act:"click", t:[36.8,82.2,6.4,4.5], ring2:[19.3,62,23.6,19.2], z:1.3, title:"Choose how careful it is", text:"Ask, then plan: questions first. Plan: approve before anything is made. Just make it: straight to the result."},
+ {ch:"controls", img:"p2_recipes", act:"look", t:[28.6,28.6,42.8,55], z:1.1, title:"Recipes", text:"Ready-made jobs in one click: turnaround, expression sheet, pose variations, icon set, UI kit, tileset and more."},
+
+ {ch:"3d", img:"p2_studio_ready", act:"type", wrap:true, t:[18.4,75.4,27.7,6.6], box:[19,76.4,26.6,4.6], fs:.9, z:1.45, type:"a knight hero, full body, T-pose with arms straight out, plain background", title:"Step 1 · Prompt a T-pose character", text:"In the Studio chat, ask for the character in a T-pose: full body, arms straight out, plain background. For a biped you want to animate this is a must: without a T-pose, rigging won't work."},
+ {ch:"3d", img:"p2_studio_ready", act:"click", keep:true, t:[43.3,82.2,2.5,4.3], z:1.45, title:"Send it", text:"Press Enter or the orange arrow."},
+ {ch:"3d", img:"p2_plan_card", act:"click", t:[21.8,48.9,23.9,4], z:1.35, title:"Approve the plan", text:"The plan makes one T-pose image (Balanced Image, 1K, 8 credits). Click Yes, generate."},
+ {ch:"3d", img:"p2_chat_result", act:"look", t:[49.5,13.4,12,19.2], z:1.4, title:"Check the pose", text:"Whole body visible, arms straight out to the sides, legs apart, plain background. If not, ask for a change in the chat."},
+ {ch:"3d", img:"p2_chat_result", act:"type", wrap:true, t:[18.4,75.4,27.7,6.6], box:[19,76.4,26.6,4.6], fs:.9, z:1.45, type:"remove the background", title:"Step 2 · Prompt: remove the background", text:"Type it in the same chat. The agent knows you mean the T-pose image you just made."},
+ {ch:"3d", img:"p3c_rmbg_typed", act:"click", t:[43.3,82.2,2.5,4.3], z:1.45, title:"Send it", text:"Press Enter."},
+ {ch:"3d", img:"p3c_plan_rmbg", act:"click", t:[21.8,52.8,23.9,3.8], z:1.35, title:"Approve: ≈ 3 credits", text:"The plan: Remove background, keep the subject exactly as it is, transparent output. Click Yes, generate."},
+ {ch:"3d", img:"p3c_rmbg_result", act:"look", t:[49.5,13.4,12,19.2], ring2:[38,44.7,7.2,3.1], z:1.35, title:"The cut-out is ready", text:"The same knight on a transparent background, in the chat and in Media. The check badge says Clean cut-out."},
+ {ch:"3d", img:"p3c_rmbg_result", act:"type", wrap:true, t:[18.4,75.4,27.7,6.6], box:[19,76.4,26.6,4.6], fs:.9, z:1.45, type:"make it 3D", title:"Step 3 · Prompt: make it 3D", text:"Type it in the same chat. The agent builds the model from the cut-out T-pose image."},
+ {ch:"3d", img:"p3c_rmbg_result", act:"click", keep:true, t:[43.3,82.2,2.5,4.3], z:1.45, title:"Send it", text:"Press Enter."},
+ {ch:"3d", img:"p3c_plan_3d", act:"click", t:[21.8,52.7,23.9,3.8], z:1.35, title:"Approve the 3D build", text:"The plan: a 3D model of the knight, background removed, standing in a T-pose. 3D costs about 35 credits and takes a few minutes."},
+ {ch:"3d", img:"p3_chat_result", act:"look", t:[17.8,13,22.5,31.5], z:1.3, title:"Your 3D model", text:"The model appears in the chat and in Media. Under it: Rig it, Download, More moves. Click it to open the 3D Viewer."},
+ {ch:"3d", img:"p3_viewer", act:"look", t:[73.2,37.9,25,3.6], z:1.25, title:"Look at it in 3D", text:"Drag to rotate, scroll to zoom, switch Textured, Clay or Wireframe. The stats show the real faces and vertices."},
+ {ch:"3d", img:"p3_viewer", act:"click", t:[71,21.5,10.3,3.9], ring2:[65.8,25.5,15.4,31.5], z:1.35, title:"Download", text:"Paid plans download the model: GLB as stored, or FBX (Unity, Unreal), OBJ, USDZ, STL, 3MF, GLTF. Next: rig and animate it in the Studio."},
+
+ {ch:"anim", img:"p3_viewer", act:"click", t:[59.4,21.5,10.8,3.9], z:1.35, title:"Step 4 · Rig it", text:"A model needs a skeleton before it can move."},
+ {ch:"anim", img:"p4_rig_view", act:"look", t:[71.6,88.6,20.2,4.7], z:1.35, title:"Body and skeleton", text:"biped for a T-pose person or humanoid; quadruped for four legs, and more."},
+ {ch:"anim", img:"p4_rig_view", act:"click", t:[88.3,93.3,10.4,4.3], z:1.35, title:"Rig character", text:"40 credits. It takes a minute or two."},
+ {ch:"anim", img:"p4_rigged", act:"click", t:[71.3,14.4,7,3.7], z:1.35, title:"Rigged ✓", text:"Turn on Bones and check the arms and legs have bones."},
+ {ch:"anim", img:"p3_viewer", act:"click", t:[81.8,21.5,7.5,3.9], z:1.35, title:"Step 5 · Animate", text:"Click Animate. The Animation Studio opens and the chat folds away."},
+ {ch:"anim", img:"vc_play", act:"type", t:[83.2,29.4,14.3,6.2], box:[83.7,30.1,13.3,1.9], fs:0.62, z:1.8, type:"make the character run", title:"1 · Describe the move", text:"WHAT: say what the character should do, in plain words. WHERE: the Motion box, top right. WHEN: first, as soon as the Animation Studio opens. Or tap an example: Run, Jump, 3 punches, Wave, Idle."},
+ {ch:"anim", img:"vc_play", act:"click", t:[83.4,36.1,13.9,3.1], z:1.8, keep:true, title:"2 · Animate", text:"Click Animate. Leave Auto-check ticked so the result is checked for you."},
+ {ch:"anim", img:"vc_play", act:"look", t:[83.2,41.6,14.2,9], z:1.75, title:"3 · Read the plan", text:"The plan lists what will move (hips, torso, head, legs, arms, hands) and what stays still (hair, ears, face), worked out from your words."},
+ {ch:"anim", img:"vc_play", vid:"c_play", act:"look", t:[24,13,46,74], ring2:[69.8,22.3,12,2.1], z:1, dur:8, tag:"Watch", title:"4 · Watch the move", text:"The character runs in a loop. The label above it shows the clip: run · 0.80 s per loop · loops. This is the starting point you'll tune next."},
+ {ch:"anim", img:"vc_open", vid:"c_open", act:"click", t:[83.2,53.7,14.6,1.9], ring2:[83.1,53.6,14.8,16.2], z:1.6, dur:3.2, title:"5 · Open Tune", text:"WHERE: the Tune section, right under the plan. WHEN: the move is right but needs adjusting. Tuning is instant and uses no credits, no new prompt needed."},
+ {ch:"anim", img:"vc_speed", vid:"c_speed", act:"look", t:[83.1,56.1,14.8,1.7], ring2:[69.8,22.3,12,2.1], z:1.35, dur:9, tag:"Drag", title:"6 · Speed: faster or slower", text:"HOW: drag the Speed slider right to speed up, left to slow down (1.00× is normal). Here 1.65× makes each loop 0.48 s; 0.45× makes it 1.78 s. The label above the character shows the new speed. WHEN: the move feels too slow or too fast."},
+ {ch:"anim", img:"vc_intensity", vid:"c_intensity", act:"look", t:[83.1,57.4,14.8,1.7], z:1.7, dur:6, tag:"Drag", title:"7 · Intensity: bigger or smaller", text:"HOW: drag Intensity right for a bigger, more energetic movement (1.50), left for a smaller, calmer one (0.60). WHEN: the move is too stiff or too wild."},
+ {ch:"anim", img:"vc_arm", vid:"c_arm", act:"look", t:[83.1,58.7,14.8,1.7], z:1.7, dur:3.5, tag:"Drag", title:"8 · Arm swing", text:"HOW: drag Arm swing right for arms that swing more (1.35), left for less. WHEN: the arms look too stiff or too loose."},
+ {ch:"anim", img:"vc_lean", vid:"c_lean", act:"look", t:[83.1,60,14.8,1.7], z:1.7, dur:5, tag:"Drag", title:"9 · Forward lean", text:"HOW: drag Forward lean right to lean the body forward (1.90 gives a sprint), left to stand up straighter. WHEN: you want the run to feel faster or more relaxed."},
+ {ch:"anim", img:"vc_tuneall", act:"look", t:[83.3,64.2,11.6,4.6], ring2:[83.6,61.7,3,1.6], z:1.7, tag:"One click", title:"10 · Quick buttons and Reset", text:"Faster, Slower, Bigger motion and Loop it make the common changes in one click. Reset puts every slider back to 1.00."},
+ {ch:"anim", img:"vc_locks", vid:"c_locks", act:"look", t:[11.8,33.8,12.6,26.4], ring2:[16.8,31.3,3,1.9], z:1.3, dur:12.5, tag:"Click a part", title:"11 · Keep parts still (Locks)", text:"WHERE: Parts on the left › Locks. HOW: click a body part to switch it from Moves to Kept still; it turns grey. Here the right arm, right hand, left arm and left hand are locked, so the legs, hips and head run while the arms hold the shield. WHEN: a part must not move."},
+ {ch:"anim", img:"vc_speed2", vid:"c_speed2", act:"look", t:[83.1,56.1,14.8,1.7], ring2:[69.8,22.3,12,2.1], z:1.35, dur:4, tag:"Drag", title:"12 · Fine-tune again", text:"You can tune at any time, also after locking parts. Here Speed is set to 1.05× for the final take."},
+ {ch:"anim", img:"vc_check", vid:"c_check", act:"look", t:[83.2,35,14.3,30.5], ring2:[84.6,68.4,12.4,10], z:1.35, dur:9, tag:"Read", title:"13 · Check the result", text:"Check shows how far each part moved: the locked arms only 4°, the right leg 60°. \"The script moved Right arm 40°: the lock held it still.\" If a locked part still moves a little, click Fix (make right arm follow its own bones)."},
+ {ch:"anim", img:"vc_save", act:"look", t:[83.4,85.4,14.2,3.4], z:1.7, title:"14 · Save the clip", text:"Happy with it? Save to project · 150 credits adds the clip to this character, or Download GLB."},
+
+ {ch:"view", img:"p2_media_hover", act:"click", t:[49.5,13.4,12,19.2], z:1.4, title:"Open an image", text:"Hover a Media tile for Edit and Sprite. Click it to open the viewer."},
+ {ch:"view", img:"p2_viewer", act:"look", t:[63.8,11,21.6,40], z:1.25, title:"Everything about the image", text:"The prompt (with Copy), size, ratio, credits used and quality checks such as Size matches."},
+ {ch:"view", img:"p2_viewer", act:"click", t:[75,65.6,9.4,3.9], z:1.35, title:"Download", text:"Images download free on every plan."},
+ {ch:"view", img:"p2_viewer_download", act:"look", t:[68.8,51,15.6,14], z:1.35, title:"PNG, JPG or WebP", text:"PNG and WebP keep transparency. JPG is the smallest, on a white background."},
+ {ch:"view", img:"p2_redo_dialog", act:"look", t:[40.3,40.5,26,17.6], z:1.3, title:"Redo with a better prompt", text:"Redo writes an improved prompt. Change anything you like, or go back to your original."},
+ {ch:"view", img:"p2_redo_dialog", act:"click", t:[55,62.8,11.1,3.9], z:1.35, title:"Run it", text:"Redo · 8 credits makes the image again, straight away."},
+ {ch:"view", img:"p2_edit_view", act:"click", t:[43.3,13.3,3,4.5], z:1.3, title:"Precise edits", text:"In the Edit view, pick the Brush and paint over the part to change. Lasso and Rectangle work too."},
+ {ch:"view", img:"p2_edit_view", act:"type", t:[43.3,85.4,55.2,4.9], box:[43.8,86.1,32,3.6], fs:.85, z:1.25, type:"give him a red cape", title:"Say what should change", text:"Only the selected area changes. Every version is kept on the right."},
+ {ch:"view", img:"p2_edit_view", act:"click", keep:true, t:[90.8,92.4,7,3.6], z:1.35, title:"Generate", text:"8 credits per edit. Compare before and after, then Export as PNG, JPG or WebP."},
+
+ {ch:"rec", img:"p2_chat_result", act:"look", t:[17.6,30.6,29,21.6], z:1.3, title:"Recipes from a result", text:"Under every result, the buttons Turnaround, Expressions, Poses and Variations open the matching recipe with your image already attached."},
+ {ch:"rec", img:"p2_more_moves", act:"click", t:[17.8,47,28.8,2.9], ring2:[17.8,51,11,32], z:1.3, title:"More recipes under More moves", text:"Icon set in this style, UI kit in this style, Turnaround, Expressions, Poses, Remove background, Upscale and Sprite sheet."},
+ {ch:"rec", img:"p2_recipes", act:"look", t:[28.6,28.6,42.8,55], z:1.1, title:"Or open Recipes", text:"Click Recipes next to the message box: Character Turnaround, Background Removal, Color Palette, Image Analysis, Pose Transfer, Image Variations, Pose Variations, Expression Sheet, Icon Set, UI Kit, Tileset."},
+ {ch:"rec", img:"p2_recipes", act:"click", t:[28.9,31.5,10.4,16], z:1.35, title:"Pick a card", text:"It becomes a chip in the message box. Fill the image slot or the short form (icon names, UI parts with exact text, number of tiles), check the cost, press Enter."},
+
+ {ch:"wf", img:"w_dash", act:"click", t:[1.6,25,12.8,5.1], z:1.3, title:"Open Workflows", text:"Sidebar › Workflows. A workflow is a chain of steps you build once and run on a whole batch of images."},
+ {ch:"wf", img:"w_dash", act:"click", t:[85.3,9.6,12.4,4], z:1.35, title:"New workflow", text:"Click New workflow. The arrow next to it has more ways to start."},
+ {ch:"wf", img:"w_which_project", act:"click", t:[33.4,38.4,33.2,6.7], ring2:[58.8,76.5,8,5.3], z:1.25, title:"Pick the project", text:"Every workflow lives in a project and follows its Style Spec. Pick it, then Continue."},
+ {ch:"wf", img:"w_new_dialog", act:"click", t:[43.6,12.2,12.9,10], z:1.35, title:"From template", text:"Blank gives an empty canvas, Import JSON loads an exported workflow. From template starts from a proven recipe."},
+ {ch:"wf", img:"w_templates", act:"click", t:[30,29.4,12.8,15.6], z:1.3, title:"Pick a template", text:"14 templates: Batch Variations, Background Removal, Turnaround, Icon Set, Tileset, UI Kit, Seasonal Re-theme and more. Here: Batch Variations, then Use template."},
+ {ch:"wf", img:"w_editor", act:"look", t:[25.4,53,49.2,8], z:1.25, title:"The steps, left to right", text:"Assets (your images) › For each (runs the next steps once per image) › Variations › Collect (gathers the results) › Export."},
+ {ch:"wf", img:"w_palette_image", act:"click", t:[16.6,26.9,3.4,4], ring2:[20.6,26.9,22.2,42.4], z:1.3, title:"Add any step", text:"The left rail adds steps: Inputs, Image, 3D, Video, Utility, Flow, Output. Image has Generate, Edit, Region edit, Remove background, Segment, Upscale."},
+ {ch:"wf", img:"w_variations_set", act:"click", t:[46.3,53.4,7.2,9.5], ring2:[80,42.2,19.2,5.2], z:1.25, title:"Change a step", text:"Click a step to open its settings. Here: 2 variations per item, differing in pose and expression. Then Save."},
+ {ch:"wf", img:"w_editor", act:"click", t:[91.6,7.7,3.8,4.8], z:1.5, title:"Run", text:"Click Run when it's ready."},
+ {ch:"wf", img:"w_run_dialog", act:"click", t:[33.4,44.3,9.6,5.1], ring2:[30.5,29.3,38.9,41.3], z:1.25, title:"Add the images", text:"Up to 20 images: Choose files, From Library, or From a previous run. Nothing is charged until you confirm."},
+ {ch:"wf", img:"w_run_files", act:"click", t:[59.2,73.3,8.7,5.1], ring2:[32.3,45.8,17.2,26], z:1.3, title:"Check the cost", text:"The images show as ready (2 of 20). Click Check the cost: nothing is charged yet."},
+ {ch:"wf", img:"w_run_spec_gate", act:"click", t:[58.2,54.7,9.5,5], ring2:[30.5,37.6,38.9,24.8], z:1.3, title:"Runs need a locked Style Spec", text:"Every run follows the project's locked Style Spec, so the whole batch matches. No spec yet? Set it up right here and lock it; you don't leave the page."},
+ {ch:"wf", img:"w_spec_ready", act:"click", t:[59.2,70.1,9.3,4.6], ring2:[30,22.7,40,54.4], z:1.3, title:"Lock and use", text:"Describe the look (or pick a style), skip or answer the questions, and the draft is ready: palette, line, rules. Lock and use locks it and goes back to the run."},
+ {ch:"wf", img:"w_run_cost", act:"click", t:[64,69.6,3.6,3.8], ring2:[30.6,23.3,38.6,53.5], z:1.3, title:"Check the cost, then Run", text:"Run Batch Variations? 2 images ready, 1 step, 32–96 credits, and your balance after. Quality checks are free. Click Run."},
+ {ch:"wf", img:"w_run_started", act:"look", t:[18.3,24,54.7,74], ring2:[74,24.7,24,34], z:1.15, title:"The run page", text:"Run #1 · Batch Variations: each step shows Done, Running or Up next with its results. It's safe to close the tab; the run keeps going."},
+ {ch:"wf", img:"w_run_review", act:"look", t:[18.5,16.4,48,3.4], ring2:[82.7,9.2,11.5,4.1], z:1.3, title:"Review what needs you", text:"The quality check flagged 2 results: they wait for review. Keep the ones you want, or Retry failed items."},
+ {ch:"wf", img:"w_run_export", act:"click", t:[19.8,14.7,11.7,3.1], ring2:[55.8,68.7,9.7,7.7], z:1.3, title:"Keep, then finish", text:"Press Keep this result, then Run from here on Collect and Export to finish. The files appear under Downloads."},
+
+
+
+
+
+
+
+
+
+
+
+
+
+ {ch:"t_background_removal", img:"y_background_removal_card", act:"click", t:[43.6, 42.0, 12.8, 2.2], z:1.3, title:"Pick Background Removal", text:"New workflow › From template › Background Removal. Cuts every image out of its background: clean transparent cut-outs."},
+ {ch:"t_background_removal", img:"y_background_removal_editor", act:"look", t:[20.6, 13.9, 58.6, 78.7], z:1.05, title:"Its 3 steps", text:"Use template opens the editor with the 3 steps already joined up. You can run it as it is, or change any step first."},
+ {ch:"t_background_removal", img:"y_background_removal_editor", act:"click", t:[91.6, 7.6, 3.7, 4.9], z:1.5, title:"Run", text:"Click Run."},
+ {ch:"t_background_removal", img:"y_background_removal_inputs", act:"click", t:[59.3, 73.4, 8.4, 4.9], ring2:[30.6, 29.0, 38.9, 42.0], z:1.25, title:"Give it the inputs", text:"Here: the knight image. Then Check the cost: nothing is charged yet."},
+ {ch:"t_background_removal", img:"y_background_removal_cost", act:"click", t:[64.0, 69.2, 3.7, 4.9], ring2:[30.6, 23.1, 38.9, 53.8], z:1.3, title:"Check the cost, then Run", text:"The window shows what runs and the credit range before anything is charged. 1 step · 1 item · 3–9 credits. Click Run."},
+ {ch:"t_background_removal", img:"y_background_removal_running", act:"look", t:[18,8,56,88], z:1.05, title:"It runs step by step", text:"Each step shows Done, Running or Up next, with its results underneath. It is safe to close the tab."},
+ {ch:"t_background_removal", img:"y_background_removal_result", act:"look", t:[18, 10, 50, 4], ring2:[75.3, 50.8, 21.2, 2.2], z:1.15, title:"Finished", text:"The run page shows how many steps finished. Downloads on the right lists the files to save."},
+ {ch:"t_background_removal", img:"y_background_removal_outputs", act:"look", t:[18,8,56,88], z:1.05, title:"The results", text:"Cuts every image out of its background: clean transparent cut-outs."},
+
+ {ch:"t_character_facial_pose_sheet", img:"y_character_facial_pose_sheet_card", act:"click", t:[57.2, 42.0, 12.8, 2.2], z:1.3, title:"Pick Character Facial Pose Sheet", text:"New workflow › From template › Character Facial Pose Sheet. Turns a character image into one sheet of the same face in many expressions."},
+ {ch:"t_character_facial_pose_sheet", img:"y_character_facial_pose_sheet_editor", act:"look", t:[20.6, 13.9, 58.6, 78.7], z:1.05, title:"Its 3 steps", text:"Use template opens the editor with the 3 steps already joined up. You can run it as it is, or change any step first."},
+ {ch:"t_character_facial_pose_sheet", img:"y_character_facial_pose_sheet_editor", act:"click", t:[91.6, 7.6, 3.7, 4.9], z:1.5, title:"Run", text:"Click Run."},
+ {ch:"t_character_facial_pose_sheet", img:"y_character_facial_pose_sheet_inputs", act:"click", t:[59.3, 73.4, 8.4, 4.9], ring2:[30.6, 29.0, 38.9, 42.0], z:1.25, title:"Give it the inputs", text:"Here: the knight as the Character. Then Check the cost: nothing is charged yet."},
+ {ch:"t_character_facial_pose_sheet", img:"y_character_facial_pose_sheet_cost", act:"click", t:[64.0, 69.2, 3.7, 4.9], ring2:[30.6, 23.1, 38.9, 53.8], z:1.3, title:"Check the cost, then Run", text:"The window shows what runs and the credit range before anything is charged. 1 step · 1 item · 8–24 credits. Click Run."},
+ {ch:"t_character_facial_pose_sheet", img:"y_character_facial_pose_sheet_running", act:"look", t:[18,8,56,88], z:1.05, title:"It runs step by step", text:"Each step shows Done, Running or Up next, with its results underneath. It is safe to close the tab."},
+ {ch:"t_character_facial_pose_sheet", img:"y_character_facial_pose_sheet_review", act:"click", t:[19.9, 130.1, 11.6, 4.9], z:1.35, title:"Review", text:"Results that the quality check flags wait for you: Keep this result on the ones you want, then Run from here to finish."},
+ {ch:"t_character_facial_pose_sheet", img:"y_character_facial_pose_sheet_result", act:"look", t:[26.7, 16.8, 6.1, 2.2], ring2:[75.3, 52.6, 21.2, 2.2], z:1.15, title:"Finished", text:"The run page shows how many steps finished. Downloads on the right lists the files to save."},
+ {ch:"t_character_facial_pose_sheet", img:"y_character_facial_pose_sheet_outputs", act:"look", t:[18,8,56,88], z:1.05, title:"The results", text:"Turns a character image into one sheet of the same face in many expressions."},
+
+ {ch:"t_character_turnaround", img:"y_character_turnaround_card", act:"click", t:[29.9, 62.2, 12.8, 2.2], z:1.3, title:"Pick Character Turnaround", text:"New workflow › From template › Character Turnaround. Turns a character image into a front, side and back turnaround."},
+ {ch:"t_character_turnaround", img:"y_character_turnaround_editor", act:"look", t:[20.6, 13.9, 58.6, 78.7], z:1.05, title:"Its 3 steps", text:"Use template opens the editor with the 3 steps already joined up. You can run it as it is, or change any step first."},
+ {ch:"t_character_turnaround", img:"y_character_turnaround_editor", act:"click", t:[91.6, 7.6, 3.7, 4.9], z:1.5, title:"Run", text:"Click Run."},
+ {ch:"t_character_turnaround", img:"y_character_turnaround_inputs", act:"click", t:[59.3, 73.4, 8.4, 4.9], ring2:[30.6, 29.0, 38.9, 42.0], z:1.25, title:"Give it the inputs", text:"Here: the knight as the Character. Then Check the cost: nothing is charged yet."},
+ {ch:"t_character_turnaround", img:"y_character_turnaround_cost", act:"click", t:[64.0, 69.2, 3.7, 4.9], ring2:[30.6, 23.1, 38.9, 53.8], z:1.3, title:"Check the cost, then Run", text:"The window shows what runs and the credit range before anything is charged. 1 step · 1 item · 8–24 credits. Click Run."},
+ {ch:"t_character_turnaround", img:"y_character_turnaround_running", act:"look", t:[18,8,56,88], z:1.05, title:"It runs step by step", text:"Each step shows Done, Running or Up next, with its results underneath. It is safe to close the tab."},
+ {ch:"t_character_turnaround", img:"y_character_turnaround_review", act:"click", t:[19.9, 120.9, 11.6, 4.9], z:1.35, title:"Review", text:"Results that the quality check flags wait for you: Keep this result on the ones you want, then Run from here to finish."},
+ {ch:"t_character_turnaround", img:"y_character_turnaround_result", act:"look", t:[26.7, 16.8, 6.1, 2.2], ring2:[75.3, 52.6, 21.2, 2.2], z:1.15, title:"Finished", text:"The run page shows how many steps finished. Downloads on the right lists the files to save."},
+ {ch:"t_character_turnaround", img:"y_character_turnaround_outputs", act:"look", t:[18,8,56,88], z:1.05, title:"The results", text:"Turns a character image into a front, side and back turnaround."},
+
+ {ch:"t_color_palette_extraction", img:"y_color_palette_extraction_card", act:"click", t:[43.6, 62.2, 12.8, 2.2], z:1.3, title:"Pick Color Palette Extraction", text:"New workflow › From template › Color Palette Extraction. Pulls the main colours out of an image, with hex codes."},
+ {ch:"t_color_palette_extraction", img:"y_color_palette_extraction_editor", act:"look", t:[20.6, 13.9, 58.6, 78.7], z:1.05, title:"Its 4 steps", text:"Use template opens the editor with the 4 steps already joined up. You can run it as it is, or change any step first."},
+ {ch:"t_color_palette_extraction", img:"y_color_palette_extraction_editor", act:"click", t:[91.6, 7.6, 3.7, 4.9], z:1.5, title:"Run", text:"Click Run."},
+ {ch:"t_color_palette_extraction", img:"y_color_palette_extraction_inputs", act:"click", t:[59.3, 73.4, 8.4, 4.9], ring2:[30.6, 29.0, 38.9, 42.0], z:1.25, title:"Give it the inputs", text:"Here: the knight image. Then Check the cost: nothing is charged yet."},
+ {ch:"t_color_palette_extraction", img:"y_color_palette_extraction_cost", act:"click", t:[64.0, 69.2, 3.7, 4.9], ring2:[30.6, 23.1, 38.9, 53.8], z:1.3, title:"Check the cost, then Run", text:"The window shows what runs and the credit range before anything is charged. 2 steps · 1 item · 0–0 credits. Click Run."},
+ {ch:"t_color_palette_extraction", img:"y_color_palette_extraction_running", act:"look", t:[18,8,56,88], z:1.05, title:"It runs step by step", text:"Each step shows Done, Running or Up next, with its results underneath. It is safe to close the tab."},
+ {ch:"t_color_palette_extraction", img:"y_color_palette_extraction_result", act:"look", t:[18, 10, 50, 4], ring2:[75.3, 50.8, 21.2, 2.2], z:1.15, title:"Finished", text:"The run page shows how many steps finished. Downloads on the right lists the files to save."},
+
+ {ch:"t_icon_set", img:"y_icon_set_card", act:"click", t:[57.2, 62.2, 12.8, 2.2], z:1.3, title:"Pick Icon Set", text:"New workflow › From template › Icon Set. Makes a matching set of six game icons on transparent backgrounds, in the style of your reference."},
+ {ch:"t_icon_set", img:"y_icon_set_editor", act:"look", t:[20.6, 13.9, 58.6, 78.7], z:1.05, title:"Its 15 steps", text:"Use template opens the editor with the 15 steps already joined up. You can run it as it is, or change any step first."},
+ {ch:"t_icon_set", img:"y_icon_set_editor", act:"click", t:[91.6, 7.6, 3.7, 4.9], z:1.5, title:"Run", text:"Click Run."},
+ {ch:"t_icon_set", img:"y_icon_set_inputs", act:"click", t:[59.3, 79.2, 8.4, 4.9], ring2:[30.6, 23.2, 38.9, 53.6], z:1.25, title:"Give it the inputs", text:"Here: the knight as Style reference, and a Theme: shop currency and rewards. Then Check the cost: nothing is charged yet."},
+ {ch:"t_icon_set", img:"y_icon_set_cost", act:"click", t:[64.0, 69.2, 3.7, 4.9], ring2:[30.6, 23.1, 38.9, 53.8], z:1.3, title:"Check the cost, then Run", text:"The window shows what runs and the credit range before anything is charged. 12 steps · 1 item · 48–198 credits. Click Run."},
+ {ch:"t_icon_set", img:"y_icon_set_running", act:"look", t:[18,8,56,88], z:1.05, title:"It runs step by step", text:"Each step shows Done, Running or Up next, with its results underneath. It is safe to close the tab."},
+ {ch:"t_icon_set", img:"y_icon_set_result", act:"look", t:[18, 10, 50, 4], ring2:[75.3, 50.8, 21.2, 2.2], z:1.15, title:"Finished", text:"The run page shows how many steps finished. Downloads on the right lists the files to save."},
+ {ch:"t_icon_set", img:"y_icon_set_outputs", act:"look", t:[18,8,56,88], z:1.05, title:"The results", text:"Makes a matching set of six game icons on transparent backgrounds, in the style of your reference."},
+
+ {ch:"t_image_analysis", img:"y_image_analysis_card", act:"click", t:[29.9, 82.4, 12.8, 2.2], z:1.3, title:"Pick Image Analysis", text:"New workflow › From template › Image Analysis. Describes an image's art style, colours, characters and setting in words."},
+ {ch:"t_image_analysis", img:"y_image_analysis_editor", act:"look", t:[20.6, 13.9, 58.6, 78.7], z:1.05, title:"Its 4 steps", text:"Use template opens the editor with the 4 steps already joined up. You can run it as it is, or change any step first."},
+ {ch:"t_image_analysis", img:"y_image_analysis_editor", act:"click", t:[91.6, 7.6, 3.7, 4.9], z:1.5, title:"Run", text:"Click Run."},
+ {ch:"t_image_analysis", img:"y_image_analysis_inputs", act:"click", t:[59.3, 73.4, 8.4, 4.9], ring2:[30.6, 29.0, 38.9, 42.0], z:1.25, title:"Give it the inputs", text:"Here: the knight image. Then Check the cost: nothing is charged yet."},
+ {ch:"t_image_analysis", img:"y_image_analysis_cost", act:"click", t:[64.0, 69.2, 3.7, 4.9], ring2:[30.6, 23.1, 38.9, 53.8], z:1.3, title:"Check the cost, then Run", text:"The window shows what runs and the credit range before anything is charged. 2 steps · 1 item · 0–0 credits. Click Run."},
+ {ch:"t_image_analysis", img:"y_image_analysis_running", act:"look", t:[18,8,56,88], z:1.05, title:"It runs step by step", text:"Each step shows Done, Running or Up next, with its results underneath. It is safe to close the tab."},
+ {ch:"t_image_analysis", img:"y_image_analysis_result", act:"look", t:[18, 10, 50, 4], ring2:[75.3, 50.8, 21.2, 2.2], z:1.15, title:"Finished", text:"The run page shows how many steps finished. Downloads on the right lists the files to save."},
+
+ {ch:"t_parallel_pose_edits", img:"y_parallel_pose_edits_card", act:"click", t:[43.6, 82.4, 12.8, 2.2], z:1.3, title:"Pick Parallel Pose Edits", text:"New workflow › From template › Parallel Pose Edits. Redraws your character in several new body poses at once."},
+ {ch:"t_parallel_pose_edits", img:"y_parallel_pose_edits_editor", act:"look", t:[20.6, 13.9, 58.6, 78.7], z:1.05, title:"Its 4 steps", text:"Use template opens the editor with the 4 steps already joined up. You can run it as it is, or change any step first."},
+ {ch:"t_parallel_pose_edits", img:"y_parallel_pose_edits_editor", act:"click", t:[91.6, 7.6, 3.7, 4.9], z:1.5, title:"Run", text:"Click Run."},
+ {ch:"t_parallel_pose_edits", img:"y_parallel_pose_edits_inputs", act:"click", t:[59.3, 73.4, 8.4, 4.9], ring2:[30.6, 29.0, 38.9, 42.0], z:1.25, title:"Give it the inputs", text:"Here: the knight as the Character. Then Check the cost: nothing is charged yet."},
+ {ch:"t_parallel_pose_edits", img:"y_parallel_pose_edits_cost", act:"click", t:[64.0, 69.2, 3.7, 4.9], ring2:[30.6, 23.1, 38.9, 53.8], z:1.3, title:"Check the cost, then Run", text:"The window shows what runs and the credit range before anything is charged. 2 steps · 1 item · 6–48 credits. Click Run."},
+ {ch:"t_parallel_pose_edits", img:"y_parallel_pose_edits_running", act:"look", t:[18,8,56,88], z:1.05, title:"It runs step by step", text:"Each step shows Done, Running or Up next, with its results underneath. It is safe to close the tab."},
+ {ch:"t_parallel_pose_edits", img:"y_parallel_pose_edits_result", act:"look", t:[26.7, 16.8, 6.1, 2.2], ring2:[75.3, 50.8, 21.2, 2.2], z:1.15, title:"Finished", text:"The run page shows how many steps finished. Downloads on the right lists the files to save."},
+ {ch:"t_parallel_pose_edits", img:"y_parallel_pose_edits_outputs", act:"look", t:[18,8,56,88], z:1.05, title:"The results", text:"Redraws your character in several new body poses at once."},
+
+ {ch:"t_parallel_image_variations", img:"y_parallel_image_variations_card", act:"click", t:[57.2, 82.4, 12.8, 2.2], z:1.3, title:"Pick Parallel Image Variations", text:"New workflow › From template › Parallel Image Variations. Makes several variations of one image, each with its own change."},
+ {ch:"t_parallel_image_variations", img:"y_parallel_image_variations_editor", act:"look", t:[20.6, 13.9, 58.6, 78.7], z:1.05, title:"Its 4 steps", text:"Use template opens the editor with the 4 steps already joined up. You can run it as it is, or change any step first."},
+ {ch:"t_parallel_image_variations", img:"y_parallel_image_variations_editor", act:"click", t:[91.6, 7.6, 3.7, 4.9], z:1.5, title:"Run", text:"Click Run."},
+ {ch:"t_parallel_image_variations", img:"y_parallel_image_variations_inputs", act:"click", t:[59.3, 73.4, 8.4, 4.9], ring2:[30.6, 29.0, 38.9, 42.0], z:1.25, title:"Give it the inputs", text:"Here: the knight as Reference. Then Check the cost: nothing is charged yet."},
+ {ch:"t_parallel_image_variations", img:"y_parallel_image_variations_cost", act:"click", t:[64.0, 69.2, 3.7, 4.9], ring2:[30.6, 23.1, 38.9, 53.8], z:1.3, title:"Check the cost, then Run", text:"The window shows what runs and the credit range before anything is charged. 2 steps · 1 item · 10–48 credits. Click Run."},
+ {ch:"t_parallel_image_variations", img:"y_parallel_image_variations_running", act:"look", t:[18,8,56,88], z:1.05, title:"It runs step by step", text:"Each step shows Done, Running or Up next, with its results underneath. It is safe to close the tab."},
+ {ch:"t_parallel_image_variations", img:"y_parallel_image_variations_review", act:"click", t:[19.9, 170.9, 11.6, 4.9], z:1.35, title:"Review", text:"Results that the quality check flags wait for you: Keep this result on the ones you want, then Run from here to finish."},
+ {ch:"t_parallel_image_variations", img:"y_parallel_image_variations_result", act:"look", t:[26.7, 16.8, 6.1, 2.2], ring2:[75.3, 52.6, 21.2, 2.2], z:1.15, title:"Finished", text:"The run page shows how many steps finished. Downloads on the right lists the files to save."},
+ {ch:"t_parallel_image_variations", img:"y_parallel_image_variations_outputs", act:"look", t:[18,8,56,88], z:1.05, title:"The results", text:"Makes several variations of one image, each with its own change."},
+
+ {ch:"t_pose_transfer", img:"y_pose_transfer_card", act:"click", t:[29.9, 58.3, 12.8, 2.2], z:1.3, title:"Pick Pose Transfer", text:"New workflow › From template › Pose Transfer. Puts your character into the pose from a reference picture."},
+ {ch:"t_pose_transfer", img:"y_pose_transfer_editor", act:"look", t:[20.6, 13.9, 58.6, 78.7], z:1.05, title:"Its 4 steps", text:"Use template opens the editor with the 4 steps already joined up. You can run it as it is, or change any step first."},
+ {ch:"t_pose_transfer", img:"y_pose_transfer_editor", act:"click", t:[91.6, 7.6, 3.7, 4.9], z:1.5, title:"Run", text:"Click Run."},
+ {ch:"t_pose_transfer", img:"y_pose_transfer_inputs", act:"click", t:[59.3, 79.2, 8.4, 4.9], ring2:[30.6, 23.9, 38.9, 52.2], z:1.25, title:"Give it the inputs", text:"Here: the knight as Target character and a walking knight as Pose reference. Then Check the cost: nothing is charged yet."},
+ {ch:"t_pose_transfer", img:"y_pose_transfer_cost", act:"click", t:[64.0, 69.2, 3.7, 4.9], ring2:[30.6, 23.1, 38.9, 53.8], z:1.3, title:"Check the cost, then Run", text:"The window shows what runs and the credit range before anything is charged. 1 step · 1 item · 8–24 credits. Click Run."},
+ {ch:"t_pose_transfer", img:"y_pose_transfer_running", act:"look", t:[18,8,56,88], z:1.05, title:"It runs step by step", text:"Each step shows Done, Running or Up next, with its results underneath. It is safe to close the tab."},
+ {ch:"t_pose_transfer", img:"y_pose_transfer_review", act:"click", t:[19.9, 167.3, 11.6, 4.9], z:1.35, title:"Review", text:"Results that the quality check flags wait for you: Keep this result on the ones you want, then Run from here to finish."},
+ {ch:"t_pose_transfer", img:"y_pose_transfer_result", act:"look", t:[26.7, 16.8, 6.1, 2.2], ring2:[75.3, 52.6, 21.2, 2.2], z:1.15, title:"Finished", text:"The run page shows how many steps finished. Downloads on the right lists the files to save."},
+ {ch:"t_pose_transfer", img:"y_pose_transfer_outputs", act:"look", t:[18,8,56,88], z:1.05, title:"The results", text:"Puts your character into the pose from a reference picture."},
+
+ {ch:"t_texture_3d_model", img:"y_texture_3d_model_card", act:"click", t:[57.2, 58.3, 12.8, 2.2], z:1.3, title:"Pick Texture 3D Model", text:"New workflow › From template › Texture 3D Model. Repaints a 3D model's surface to match a texture reference picture."},
+ {ch:"t_texture_3d_model", img:"y_texture_3d_model_editor", act:"look", t:[20.6, 13.9, 58.6, 78.7], z:1.05, title:"Its 4 steps", text:"Use template opens the editor with the 4 steps already joined up. You can run it as it is, or change any step first."},
+ {ch:"t_texture_3d_model", img:"y_texture_3d_model_editor", act:"click", t:[91.6, 7.6, 3.7, 4.9], z:1.5, title:"Run", text:"Click Run."},
+ {ch:"t_texture_3d_model", img:"y_texture_3d_model_inputs", act:"click", t:[59.3, 76.3, 8.4, 4.9], ring2:[30.6, 26.8, 38.9, 46.5], z:1.25, title:"Give it the inputs", text:"Here: a 3D model (GLB) and the knight as Texture reference. Then Check the cost: nothing is charged yet."},
+ {ch:"t_texture_3d_model", img:"y_texture_3d_model_cost", act:"click", t:[64.0, 69.2, 3.7, 4.9], ring2:[30.6, 23.1, 38.9, 53.8], z:1.3, title:"Check the cost, then Run", text:"The window shows what runs and the credit range before anything is charged. 1 step · 1 item · 20–60 credits. Click Run."},
+ {ch:"t_texture_3d_model", img:"y_texture_3d_model_running", act:"look", t:[18,8,56,88], z:1.05, title:"It runs step by step", text:"Each step shows Done, Running or Up next, with its results underneath. It is safe to close the tab."},
+ {ch:"t_texture_3d_model", img:"y_texture_3d_model_result", act:"look", t:[18, 10, 50, 4], ring2:[75.3, 50.8, 21.2, 2.2], z:1.15, title:"Finished", text:"The run page shows how many steps finished. Downloads on the right lists the files to save."},
+ {ch:"t_texture_3d_model", img:"y_texture_3d_model_outputs", act:"look", t:[18,8,56,88], z:1.05, title:"The results", text:"Repaints a 3D model's surface to match a texture reference picture."},
+
+ {ch:"t_tileset", img:"y_tileset_card", act:"click", t:[29.9, 78.5, 12.8, 2.2], z:1.3, title:"Pick Tileset", text:"New workflow › From template › Tileset. Makes seamless ground tiles that fit together, in the style of your reference."},
+ {ch:"t_tileset", img:"y_tileset_editor", act:"look", t:[20.6, 13.9, 58.6, 78.7], z:1.05, title:"Its 8 steps", text:"Use template opens the editor with the 8 steps already joined up. You can run it as it is, or change any step first."},
+ {ch:"t_tileset", img:"y_tileset_editor", act:"click", t:[91.6, 7.6, 3.7, 4.9], z:1.5, title:"Run", text:"Click Run."},
+ {ch:"t_tileset", img:"y_tileset_inputs", act:"click", t:[59.3, 79.2, 8.4, 4.9], ring2:[30.6, 23.2, 38.9, 53.6], z:1.25, title:"Give it the inputs", text:"Here: the knight as Style reference, and a Theme: grass, stones and a dirt path. Then Check the cost: nothing is charged yet."},
+ {ch:"t_tileset", img:"y_tileset_cost", act:"click", t:[64.0, 69.2, 3.7, 4.9], ring2:[30.6, 23.1, 38.9, 53.8], z:1.3, title:"Check the cost, then Run", text:"The window shows what runs and the credit range before anything is charged. 5 steps · 1 item · 37–120 credits. Click Run."},
+ {ch:"t_tileset", img:"y_tileset_running", act:"look", t:[18,8,56,88], z:1.05, title:"It runs step by step", text:"Each step shows Done, Running or Up next, with its results underneath. It is safe to close the tab."},
+ {ch:"t_tileset", img:"y_tileset_result", act:"look", t:[26.7, 16.8, 6.1, 2.2], ring2:[75.3, 50.8, 21.2, 2.2], z:1.15, title:"Finished", text:"The run page shows how many steps finished. Downloads on the right lists the files to save."},
+ {ch:"t_tileset", img:"y_tileset_outputs", act:"look", t:[18,8,56,88], z:1.05, title:"The results", text:"Makes seamless ground tiles that fit together, in the style of your reference."},
+
+ {ch:"t_ui_kit", img:"y_ui_kit_card", act:"click", t:[29.9, 60.2, 12.8, 2.2], z:1.3, title:"Pick UI Kit", text:"New workflow › From template › UI Kit. Makes a matching game UI kit, from buttons to panels, in your style."},
+ {ch:"t_ui_kit", img:"y_ui_kit_editor", act:"look", t:[20.6, 13.9, 58.6, 78.7], z:1.05, title:"Its 21 steps", text:"Use template opens the editor with the 21 steps already joined up. You can run it as it is, or change any step first."},
+ {ch:"t_ui_kit", img:"y_ui_kit_editor", act:"click", t:[91.6, 7.6, 3.7, 4.9], z:1.5, title:"Run", text:"Click Run."},
+ {ch:"t_ui_kit", img:"y_ui_kit_inputs", act:"click", t:[59.3, 79.2, 8.4, 4.9], ring2:[30.6, 23.2, 38.9, 53.6], z:1.25, title:"Give it the inputs", text:"Here: the knight as Style reference, and a Theme: fantasy RPG menu with PLAY, SHOP and SETTINGS. Then Check the cost: nothing is charged yet."},
+ {ch:"t_ui_kit", img:"y_ui_kit_cost", act:"click", t:[64.0, 69.2, 3.7, 4.9], ring2:[30.6, 23.1, 38.9, 53.8], z:1.3, title:"Check the cost, then Run", text:"The window shows what runs and the credit range before anything is charged. 18 steps · 1 item · 72–297 credits. Click Run."},
+ {ch:"t_ui_kit", img:"y_ui_kit_running", act:"look", t:[18,8,56,88], z:1.05, title:"It runs step by step", text:"Each step shows Done, Running or Up next, with its results underneath. It is safe to close the tab."},
+ {ch:"t_ui_kit", img:"y_ui_kit_review", act:"click", t:[20, 15, 12, 3], z:1.35, title:"Review", text:"Results that the quality check flags wait for you: Keep this result on the ones you want, then Run from here to finish."},
+ {ch:"t_ui_kit", img:"y_ui_kit_result", act:"look", t:[18, 10, 50, 4], ring2:[74, 24, 24, 10], z:1.15, title:"Finished", text:"The run page shows how many steps finished. Downloads on the right lists the files to save."},
+
+ {ch:"t_seasonal_re_theme", img:"y_seasonal_re_theme_card", act:"look", t:[15,8,70,84], z:1, title:"Pick Seasonal Re-theme", text:"New workflow › From template › Seasonal Re-theme (7 steps): re-themes a batch of game assets for a season or event, keeping each subject the same."},
+ {ch:"t_seasonal_re_theme", img:"y_seasonal_re_theme_editor", act:"look", t:[25,50,50,13], z:1.15, title:"Its 7 steps", text:"Assets › For each › Re-theme › Cut out › Review › Collect › Export. The Re-theme step needs a theme before it can run."},
+ {ch:"t_seasonal_re_theme", img:"y_seasonal_re_theme_settings", act:"click", t:[40,52.8,5,8], ring2:[80,36,19.5,25], z:1.3, title:"Open the Re-theme step", text:"Click the Re-theme step. Its settings open on the right: Season or event, Describe the theme, Theme references."},
+ {ch:"t_seasonal_re_theme", img:"y_seasonal_re_theme_theme", act:"click", t:[86.5,48,9.3,3.6], ring2:[80,63.6,19.5,10], z:1.45, title:"Pick a season and describe it", text:"Pick Halloween, Winter Holidays, Lunar New Year, Summer, Valentine’s or Custom, and optionally describe it (snow on the armour, frosty blue light). Then Save and Run."},
+
+ {ch:"sprites", img:"p2_sprite_setup", act:"click", t:[51.2,32.5,4,3.7], z:1.4, title:"Pick the action", text:"Idle, Walk, Run, Attack, Jump, Hurt, or describe your own move."},
+ {ch:"sprites", img:"p2_sprite_setup", act:"look", t:[47.5,41.4,47,8.4], z:1.3, title:"Frames and view", text:"4 to 12 frames. Side, Front, Three-quarter or Top-down."},
+ {ch:"sprites", img:"p2_sprite_setup", act:"click", t:[78.3,64.8,14.9,4.3], z:1.35, title:"Make the key frame", text:"The cost shows first: 8 frames × 11 = 88. Frame 1 is made first, for 11, so you can check it."},
+ {ch:"sprites", img:"p2_sprite_keyframe", act:"click", t:[67.6,25.6,19.9,3.9], z:1.3, title:"Approve, then export", text:"Approve and the other 7 frames follow it. Preview the loop, then export a sheet + JSON, a ZIP, a GIF or a WebP."},
+
+];
+
+/* ---------- elements ---------- */
+const $ = id => document.getElementById(id);
+const stage = $("stage"), cam = $("cam"), ring = $("ring"), tag = $("tag"), cursor = $("cursor"), typer = $("typer"), typed = $("typed");
+const shots = [$("shotA"), $("shotB")];
+let front = 0, curImg = null;
+
+let idx = -1, runId = 0, playing = false, mode = "watch", speed = 1, zoom = 1;
+let tryResolve = null, started = false;
+const visited = new Set();
+
+/* ---------- layout unit ---------- */
+new ResizeObserver(() => stage.style.setProperty("--u", (stage.clientWidth / 100) + "px")).observe(stage);
+stage.style.setProperty("--u", (stage.clientWidth / 100) + "px");
+// the cam div carries --u too (inherits from stage)
+
+/* ---------- helpers ---------- */
+const sleep = ms => new Promise(r => setTimeout(r, ms / speed));
+const alive = id => id === runId;
+const pct = (el, r) => { el.style.left = r[0] + "%"; el.style.top = r[1] + "%"; el.style.width = r[2] + "%"; el.style.height = r[3] + "%"; };
+
+function setShot(name) {
+  if (name === curImg) return Promise.resolve();
+  curImg = name;
+  $("url").textContent = urlFor(name);
+  const back = shots[1 - front];
+  return new Promise(res => {
+    const done = () => { back.classList.add("on"); shots[front].classList.remove("on"); front = 1 - front; setTimeout(res, 420); };
+    if (back.src === IMG[name] && back.complete) done();
+    else { back.onload = done; back.src = IMG[name]; }
+  });
+}
+
+function setCamera(t, z) {
+  zoom = z || 1;
+  const cx = (t[0] + t[2] / 2) / 100, cy = (t[1] + t[3] / 2) / 100;
+  let tx = 0.5 - zoom * cx, ty = 0.5 - zoom * cy;           // fractions of stage size
+  tx = Math.min(0, Math.max(1 - zoom, tx));
+  ty = Math.min(0, Math.max(1 - zoom, ty));
+  cam.style.transform = `translate(${tx * 100}%, ${ty * 100}%) scale(${zoom})`;
+  cursor.style.transform = `scale(${1 / zoom})`;
+  ring.style.borderWidth = (2 / zoom) + "px";
+  tag.style.fontSize = `calc(var(--u) * ${0.85 / zoom})`;
+}
+
+function moveCursor(x, y) { cursor.style.left = x + "%"; cursor.style.top = y + "%"; }
+
+function showRing(r, label) {
+  const pad = 0.5;
+  pct(ring, [r[0] - pad, r[1] - pad * 1.6, r[2] + pad * 2, r[3] + pad * 3.2]);
+  tag.textContent = label;
+  ring.classList.toggle("below", r[1] < 9);
+  ring.classList.add("on");
+}
+
+function ripple(x, y) {
+  const d = document.createElement("div");
+  d.className = "ripple";
+  d.style.left = x + "%"; d.style.top = y + "%";
+  d.style.transform = `scale(${1 / zoom})`;
+  cam.appendChild(d);
+  setTimeout(() => d.remove(), 800);
+}
+
+async function clickAt(x, y, id) {
+  cursor.classList.add("press");
+  ripple(x, y);
+  await sleep(140);
+  cursor.classList.remove("press");
+}
+
+function clearTyper() { typer.classList.remove("on"); typed.textContent = ""; }
+
+async function typeText(s, id) {
+  pct(typer, s.box);
+  typer.style.fontSize = `calc(var(--u) * ${s.fs || 1})`;
+  typer.classList.toggle("wrap", !!s.wrap);
+  typed.textContent = "";
+  typer.classList.add("on");
+  for (const ch of s.type) {
+    if (!alive(id)) return;
+    typed.textContent += ch;
+    await sleep(ch === " " ? 70 : 38 + Math.random() * 45);
+  }
+}
+
+function waitTry(id) {
+  ring.classList.add("try");
+  $("hint").classList.add("on");
+  return new Promise(res => { tryResolve = () => { tryResolve = null; res(alive(id)); }; });
+}
+ring.addEventListener("click", () => { if (tryResolve) tryResolve(); });
+
+/* ---------- UI ---------- */
+function buildChapters() {
+  const nav = $("chapters");
+  let lastGroup = null;
+  CH.forEach((c, i) => {
+    if (c.group && c.group !== lastGroup) { const g = document.createElement("div"); g.className = "grp"; g.textContent = c.group; nav.appendChild(g); }
+    lastGroup = c.group || null;
+    const b = document.createElement("button");
+    b.className = "chap"; b.dataset.ch = c.id;
+    const n = STEPS.filter(s => s.ch === c.id).length;
+    b.innerHTML = `<span class="n">${i + 1}</span><span><div class="t">${c.name}</div><div class="s">${c.sub} · ${n} steps</div><div class="bar"><i></i></div></span>`;
+    b.onclick = () => { begin(); go(STEPS.findIndex(s => s.ch === c.id)); };
+    nav.appendChild(b);
+  });
+}
+
+function updateUI(i) {
+  const s = STEPS[i];
+  const chIndex = CH.findIndex(c => c.id === s.ch);
+  document.querySelectorAll(".chap").forEach((el, k) => {
+    const id = CH[k].id;
+    const list = STEPS.map((st, j) => [st, j]).filter(([st]) => st.ch === id);
+    const seen = list.filter(([, j]) => visited.has(j)).length;
+    el.classList.toggle("active", k === chIndex);
+    el.classList.toggle("done", seen === list.length && k !== chIndex);
+    el.querySelector(".bar i").style.width = (seen / list.length * 100) + "%";
+  });
+  const inCh = STEPS.filter(st => st.ch === s.ch);
+  const pos = inCh.indexOf(s) + 1;
+  $("chapName").textContent = CH[chIndex].name;
+  $("chapNo").textContent = (chIndex + 1) + "/" + CH.length;
+  $("count").textContent = `Step ${pos} of ${inCh.length}`;
+  const cap = $("cap");
+  $("title").textContent = s.title;
+  $("text").textContent = s.text;
+  cap.classList.remove("fade"); void cap.offsetWidth; cap.classList.add("fade");
+  $("hint").classList.remove("on");
+  $("hint").textContent = s.act === "drag" ? "Your turn: click the slider to drag it" : s.act === "type" ? "Your turn: click the box to type" : s.act === "click" ? "Your turn: click the highlighted spot" : "Your turn: click the highlighted area to continue";
+  $("prog").style.width = ((i + 1) / STEPS.length * 100) + "%";
+}
+
+function setPlaying(p) {
+  playing = p;
+  $("playIcon").innerHTML = p ? '<path d="M7 5h4v14H7zM13 5h4v14h-4z"/>' : '<path d="M8 5v14l11-7z"/>';
+}
+
+/* ---------- the step engine ---------- */
+async function go(i) {
+  if (i < 0) i = 0;
+  if (i >= STEPS.length) { finish(); return; }
+  const id = ++runId;
+  if (tryResolve) { const r = tryResolve; tryResolve = null; }
+  ring.classList.remove("try");
+  $("outro").classList.add("hide");
+  idx = i; visited.add(i);
+  const s = STEPS[i];
+  updateUI(i);
+  if (window.speechSynthesis) speechSynthesis.cancel();
+  $("narr").classList.remove("on");
+  if (!s.keep || curImg !== s.img) clearTyper();
+  ring.classList.remove("on");
+
+  await setShot(s.img);                if (!alive(id)) return;
+  const narrDone = narrate(s, id);
+  { const v = $("clip");
+    if (s.vid && VIDS[s.vid]) { if (v.dataset.k !== s.vid) { v.src = VIDS[s.vid]; v.dataset.k = s.vid; } v.currentTime = 0; v.play().catch(() => {}); v.classList.add("on"); }
+    else { v.classList.remove("on"); v.pause(); } }
+  if (s.show) { pct(typer, s.show.box); typer.style.fontSize = `calc(var(--u) * ${s.show.fs || 1})`; typer.classList.add("wrap"); typed.textContent = s.show.text; typer.classList.add("on"); }
+  setCamera(s.t, s.z);
+  const tx = s.act === "type" ? s.box[0] + 1.2 : s.act === "drag" ? s.from[0] : s.t[0] + s.t[2] / 2;
+  const ty = s.act === "type" ? s.box[1] + s.box[3] / 2 : s.act === "drag" ? s.from[1] : s.t[1] + s.t[3] / 2;
+  $("knob").classList.remove("on");
+  cursor.style.opacity = (mode === "try" || s.vid) ? 0 : 1;
+  moveCursor(tx, ty);
+  await sleep(450);                    if (!alive(id)) return;
+  showRing(s.t, s.tag || (s.act === "type" ? "Type" : s.act === "click" ? "Click" : s.act === "drag" ? "Drag" : "Look"));
+  await sleep(550);                    if (!alive(id)) return;
+
+  if (mode === "try") {
+    const ok = await waitTry(id);      if (!ok || !alive(id)) return;
+    ring.classList.remove("try"); $("hint").classList.remove("on");
+  }
+
+  if (s.act === "click") {
+    await clickAt(tx, ty, id);         if (!alive(id)) return;
+    if (s.ring2) { await sleep(250); showRing(s.ring2, "Opens"); }
+  } else if (s.act === "drag") {
+    const k = $("knob");
+    k.style.transition = "none"; k.style.left = s.from[0] + "%"; k.style.top = s.from[1] + "%";
+    void k.offsetWidth; k.style.transition = ""; k.classList.add("on");
+    cursor.classList.add("press"); ripple(s.from[0], s.from[1]);
+    await sleep(250);                  if (!alive(id)) return;
+    cursor.style.transition = "left 1.3s cubic-bezier(.45,.05,.2,1), top 1.3s cubic-bezier(.45,.05,.2,1)";
+    moveCursor(s.to[0], s.to[1]); k.style.left = s.to[0] + "%";
+    await sleep(1350);                 cursor.style.transition = ""; cursor.classList.remove("press");
+    if (!alive(id)) return;
+  } else if (s.act === "type") {
+    await clickAt(tx, ty, id);
+    await typeText(s, id);             if (!alive(id)) return;
+  }
+
+  let read = Math.min(7200, Math.max(2600, 1500 + s.text.length * 34));
+  if (s.vid) read = Math.max(read, (s.dur || 8.5) * 1000 + 600);
+  if (mode === "try") { await sleep(s.act === "look" ? 200 : 900); if (alive(id)) go(i + 1); return; }
+  if (!playing) return;
+  await Promise.all([sleep(read), narrDone]);   if (!alive(id) || !playing) return;
+  await sleep(500);                     if (!alive(id) || !playing) return;
+  go(i + 1);
+}
+
+function finish() {
+  $("narr").classList.remove("on"); if (window.speechSynthesis) speechSynthesis.cancel();
+  $("clip").classList.remove("on"); $("clip").pause();
+  runId++; setPlaying(false); ring.classList.remove("on"); clearTyper();
+  setCamera([0, 0, 100, 100], 1);
+  $("outro").classList.remove("hide");
+  $("prog").style.width = "100%";
+}
+
+function begin(m) {
+  if (m) setMode(m);
+  if (!started) { started = true; $("intro").classList.add("hide"); }
+}
+
+function setMode(m) {
+  mode = m;
+  document.querySelectorAll("#mode button").forEach(b => b.classList.toggle("on", b.dataset.m === m));
+  if (m === "try") setPlaying(false);
+}
+
+/* ---------- controls ---------- */
+$("startWatch").onclick = () => { begin("watch"); setPlaying(true); go(0); };
+$("startTry").onclick = () => { begin("try"); go(0); };
+$("replay").onclick = () => { setMode("watch"); setPlaying(true); go(0); };
+$("next").onclick = () => { begin(); go(idx + 1); };
+$("prev").onclick = () => { begin(); go(Math.max(0, idx - 1)); };
+$("play").onclick = () => {
+  begin();
+  if (mode === "try") setMode("watch");
+  if (playing) { setPlaying(false); runId++; return; }
+  setPlaying(true);
+  go(idx < 0 || idx >= STEPS.length ? 0 : idx);
+};
+document.querySelectorAll("#mode button").forEach(b => b.onclick = () => { begin(); setMode(b.dataset.m); go(Math.max(0, idx)); });
+document.querySelectorAll("#speed button").forEach(b => b.onclick = () => {
+  speed = parseFloat(b.dataset.s);
+  document.querySelectorAll("#speed button").forEach(x => x.classList.toggle("on", x === b));
+});
+document.addEventListener("keydown", e => {
+  if (e.key === "ArrowRight") { e.preventDefault(); $("next").click(); }
+  else if (e.key === "ArrowLeft") { e.preventDefault(); $("prev").click(); }
+  else if (e.key === " ") { e.preventDefault(); $("play").click(); }
+  else if (e.key === "t" || e.key === "T") { begin(); setMode(mode === "watch" ? "try" : "watch"); go(Math.max(0, idx)); }
+});
+
+
+/* ---------- drawer + fullscreen ---------- */
+const rail = document.querySelector(".rail");
+function drawer(open) { rail.classList.toggle("open", open); $("scrim").classList.toggle("on", open); }
+$("chapBtn").onclick = () => drawer(!rail.classList.contains("open"));
+$("scrim").onclick = () => drawer(false);
+document.getElementById("chapters").addEventListener("click", e => { if (e.target.closest(".chap")) drawer(false); });
+function toggleFs() {
+  if (!document.fullscreenElement) document.documentElement.requestFullscreen && document.documentElement.requestFullscreen();
+  else document.exitFullscreen && document.exitFullscreen();
+}
+$("fsBtn").onclick = toggleFs;
+document.addEventListener("fullscreenchange", () => { $("fsBtn").lastChild.textContent = document.fullscreenElement ? "Exit full screen" : "Full screen"; });
+document.addEventListener("keydown", e => {
+  if (e.key === "f" || e.key === "F") toggleFs();
+  else if (e.key === "Escape") drawer(false);
+});
+
+
+/* ---------- narration ---------- */
+let voiceOn = false;
+try { voiceOn = localStorage.getItem("ra_voice") === "1"; } catch (e) {}
+const LABELS = /(WHAT:|WHERE:|WHEN:|HOW:)/;
+function narrLines(text) {
+  const parts = text.split(LABELS).filter(x => x && x.trim());
+  const lines = []; let cur = null;
+  for (const p of parts) {
+    if (LABELS.test(p)) { cur = { label: p.replace(":", ""), text: "" }; lines.push(cur); }
+    else if (cur && !cur.text) cur.text = p.trim();
+    else lines.push({ label: "", text: p.trim() });
+  }
+  return lines.length ? lines : [{ label: "", text }];
+}
+function speakText(t) {
+  return new Promise(res => {
+    if (!voiceOn || !window.speechSynthesis) return res();
+    speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(t.replace(/[·›]/g, ",").replace(/×/g, " times"));
+    u.rate = Math.min(1.6, 1.02 * speed); u.onend = res; u.onerror = res;
+    const v = speechSynthesis.getVoices().find(v => /en-(US|GB)/.test(v.lang) && /Natural|Aria|Jenny|Guy|Google/.test(v.name)) || speechSynthesis.getVoices().find(v => /^en/.test(v.lang));
+    if (v) u.voice = v;
+    speechSynthesis.speak(u);
+  });
+}
+async function narrate(s, id) {
+  const n = $("narr");
+  const chName = (CH.find(c => c.id === s.ch) || {}).name || "";
+  $("nk").textContent = chName;
+  $("nt").textContent = s.title;
+  const nb = $("nb"); nb.innerHTML = "";
+  const words = [];
+  for (const ln of narrLines(s.text)) {
+    const d = document.createElement("div"); d.className = "nl";
+    if (ln.label) { const b = document.createElement("b"); b.textContent = ln.label; d.appendChild(b); }
+    ln.text.split(/\s+/).forEach((w, i) => { const sp = document.createElement("span"); sp.className = "w"; sp.textContent = (i ? " " : "") + w; d.appendChild(sp); words.push(sp); });
+    nb.appendChild(d);
+  }
+  const ty = s.t[1] + s.t[3] / 2;
+  n.classList.toggle("top", ty > 56);
+  const tx = s.t[0] + s.t[2] / 2, wide = s.t[2] > 45;
+  n.classList.toggle("left", !wide && tx > 62);
+  n.classList.toggle("right", !wide && tx < 38);
+  n.classList.add("on");
+  const spoken = speakText(s.title + ". " + s.text.replace(/(WHAT|WHERE|WHEN|HOW):/g, "$1,"));
+  for (const w of words) { if (!alive(id)) return; w.classList.add("on"); await sleep(voiceOn ? 230 : 70); }
+  await spoken;
+}
+$("voiceBtn").classList.toggle("on", voiceOn);
+$("voiceBtn").onclick = () => {
+  voiceOn = !voiceOn; $("voiceBtn").classList.toggle("on", voiceOn);
+  try { localStorage.setItem("ra_voice", voiceOn ? "1" : "0"); } catch (e) {}
+  if (!voiceOn && window.speechSynthesis) speechSynthesis.cancel();
+};
+document.addEventListener("keydown", e => { if (e.key === "v" || e.key === "V") $("voiceBtn").click(); });
+
+/* ---------- boot ---------- */
+buildChapters();
+shots[0].src = IMG.p1_home; curImg = "p1_home";
+moveCursor(60, 60);
+setCamera([0, 0, 100, 100], 1);
+</script>
+</body>
+</html>

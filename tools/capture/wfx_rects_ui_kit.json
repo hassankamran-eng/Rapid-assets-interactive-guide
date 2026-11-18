@@ -1,0 +1,53 @@
+{
+ "UI Kit": {
+  "card": [
+   29.9,
+   60.2,
+   12.8,
+   2.2
+  ],
+  "canvas": [
+   20.6,
+   13.9,
+   58.6,
+   78.7
+  ],
+  "run_btn": [
+   91.6,
+   7.6,
+   3.7,
+   4.9
+  ],
+  "dialog": [
+   30.6,
+   23.2,
+   38.9,
+   53.6
+  ],
+  "theme": [
+   32.3,
+   71.0,
+   35.4,
+   6.4
+  ],
+  "check": [
+   59.3,
+   79.2,
+   8.4,
+   4.9
+  ],
+  "cost_dialog": [
+   30.6,
+   23.1,
+   38.9,
+   53.8
+  ],
+  "confirm": [
+   64.0,
+   69.2,
+   3.7,
+   4.9
+  ],
+  "cost_text": "Run UI Kit?\n\nCheck the cost, then run. Nothing is charged until you run.\n\nInputs\n1 image ready \u00b7 1 answer filled in \u00b7 all set\nWhat runs\n18 steps \u00b7 1 item \u00b7 72\u2013297 credits\nWorst case includes automatic retries (up to 2 quality retries per item). You're only charged for what actually runs.\nYour balance\n9,421 credits \u2192 at least 9,124 left\nRun\nGo back\n\nPreview applies when you add more than 2 images.\n"
+ }
+}

@@ -1,0 +1,782 @@
+{
+"p1_chat_history": [
+1600,
+1000
+],
+"p1_gallery": [
+1600,
+1000
+],
+"p1_home": [
+1600,
+1000
+],
+"p1_home_pick_tool": [
+1600,
+1000
+],
+"p1_integrations": [
+1600,
+1000
+],
+"p1_learn": [
+1600,
+1000
+],
+"p1_mode_pill": [
+1600,
+1000
+],
+"p1_new_project": [
+1600,
+1000
+],
+"p1_project_switcher": [
+1600,
+1000
+],
+"p1_projects": [
+1600,
+1000
+],
+"p1_sidebar_tools": [
+1600,
+1000
+],
+"p1_workflows": [
+1600,
+1000
+],
+"p2_chat_result": [
+1600,
+1000
+],
+"p2_edit_view": [
+1600,
+1000
+],
+"p2_media_hover": [
+1600,
+1000
+],
+"p2_more_moves": [
+1600,
+1000
+],
+"p2_plan_card": [
+1600,
+1000
+],
+"p2_plus_menu": [
+1600,
+1000
+],
+"p2_prompt_typed": [
+1600,
+1000
+],
+"p2_recipes": [
+1600,
+1000
+],
+"p2_redo_dialog": [
+1600,
+1000
+],
+"p2_spec_after_questions": [
+1600,
+1000
+],
+"p2_spec_continue": [
+1600,
+1000
+],
+"p2_spec_draft_button": [
+1600,
+1000
+],
+"p2_spec_presets": [
+1600,
+1000
+],
+"p2_spec_questions": [
+1600,
+1000
+],
+"p2_spec_setup": [
+1600,
+1000
+],
+"p2_sprite_keyframe": [
+1600,
+1000
+],
+"p2_sprite_list": [
+1600,
+1000
+],
+"p2_sprite_setup": [
+1600,
+1000
+],
+"p2_studio_first": [
+1600,
+1000
+],
+"p2_studio_ready": [
+1600,
+1000
+],
+"p2_tools_edit": [
+1600,
+1000
+],
+"p2_tools_image": [
+1600,
+1000
+],
+"p2_type_picker": [
+1600,
+1000
+],
+"p2_viewer": [
+1600,
+1000
+],
+"p2_viewer_download": [
+1600,
+1000
+],
+"p2_working": [
+1600,
+1000
+],
+"p3_building": [
+1600,
+1000
+],
+"p3_chat_result": [
+1600,
+1000
+],
+"p3_download_menu": [
+1600,
+1000
+],
+"p3_make_it_3d_armed": [
+1600,
+1000
+],
+"p3_make_it_3d_pill": [
+1600,
+1000
+],
+"p3_tools_3d": [
+1600,
+1000
+],
+"p3_viewer": [
+1600,
+1000
+],
+"p4_anim_studio": [
+1600,
+1000
+],
+"p4_no_skeleton": [
+1600,
+1000
+],
+"p4_rig_view": [
+1600,
+1000
+],
+"p4_rigged": [
+1600,
+1000
+],
+"p4_rigging": [
+1600,
+1000
+],
+"p6_credits_modal": [
+1600,
+1000
+],
+"v_check": [
+1600,
+1000
+],
+"v_lock_arms": [
+1600,
+1000
+],
+"v_lock_leg": [
+1600,
+1000
+],
+"v_motion": [
+1600,
+1000
+],
+"v_running": [
+1600,
+1000
+],
+"v_tune_speed": [
+1600,
+1000
+],
+"p3c_3d_typed": [
+1600,
+1000
+],
+"p3c_chat_before": [
+1600,
+1000
+],
+"p3c_plan_3d": [
+1600,
+1000
+],
+"p3c_plan_rmbg": [
+1600,
+1000
+],
+"p3c_rmbg_result": [
+1600,
+1000
+],
+"p3c_rmbg_typed": [
+1600,
+1000
+],
+"w_assets_settings": [
+1600,
+1000
+],
+"w_dash": [
+1600,
+1000
+],
+"w_editor": [
+1600,
+1000
+],
+"w_library": [
+1600,
+1000
+],
+"w_library_picked": [
+1600,
+1000
+],
+"w_more_menu": [
+1600,
+1000
+],
+"w_new_dialog": [
+1600,
+1000
+],
+"w_new_menu": [
+1600,
+1000
+],
+"w_palette_image": [
+1600,
+1000
+],
+"w_project_page": [
+1600,
+1000
+],
+"w_run_cost": [
+1600,
+1000
+],
+"w_run_dialog": [
+1600,
+1000
+],
+"w_run_files": [
+1600,
+1000
+],
+"w_run_progress2": [
+1600,
+1000
+],
+"w_run_progress6": [
+1600,
+1000
+],
+"w_run_started": [
+1600,
+1000
+],
+"w_saved": [
+1600,
+1000
+],
+"w_spec_prompt": [
+1600,
+1000
+],
+"w_templates": [
+1600,
+1000
+],
+"w_variations_set": [
+1600,
+1000
+],
+"w_variations_settings": [
+1600,
+1000
+],
+"w_which_project": [
+1600,
+1000
+],
+"w_run_approved": [
+1600,
+1000
+],
+"w_run_export": [
+1600,
+1000
+],
+"w_run_progress": [
+1600,
+1000
+],
+"w_run_review": [
+1600,
+1000
+],
+"w_run_spec_gate": [
+1600,
+1000
+],
+"w_spec_describe": [
+1600,
+1000
+],
+"w_spec_lock_continue": [
+1600,
+1000
+],
+"w_spec_questions": [
+1600,
+1000
+],
+"w_spec_ready": [
+1600,
+1000
+],
+"y_background_removal_card": [
+1440,
+900
+],
+"y_background_removal_cost": [
+1440,
+900
+],
+"y_background_removal_editor": [
+1440,
+900
+],
+"y_background_removal_inputs": [
+1440,
+900
+],
+"y_background_removal_outputs": [
+1440,
+900
+],
+"y_background_removal_result": [
+1440,
+900
+],
+"y_background_removal_running": [
+1440,
+900
+],
+"y_character_facial_pose_sheet_card": [
+1440,
+900
+],
+"y_character_facial_pose_sheet_cost": [
+1440,
+900
+],
+"y_character_facial_pose_sheet_editor": [
+1440,
+900
+],
+"y_character_facial_pose_sheet_inputs": [
+1440,
+900
+],
+"y_character_facial_pose_sheet_outputs": [
+1440,
+900
+],
+"y_character_facial_pose_sheet_result": [
+1440,
+900
+],
+"y_character_facial_pose_sheet_review": [
+1440,
+900
+],
+"y_character_facial_pose_sheet_running": [
+1440,
+900
+],
+"y_character_turnaround_card": [
+1440,
+900
+],
+"y_character_turnaround_cost": [
+1440,
+900
+],
+"y_character_turnaround_editor": [
+1440,
+900
+],
+"y_character_turnaround_inputs": [
+1440,
+900
+],
+"y_character_turnaround_outputs": [
+1440,
+900
+],
+"y_character_turnaround_result": [
+1440,
+900
+],
+"y_character_turnaround_review": [
+1440,
+900
+],
+"y_character_turnaround_running": [
+1440,
+900
+],
+"y_color_palette_extraction_card": [
+1440,
+900
+],
+"y_color_palette_extraction_cost": [
+1440,
+900
+],
+"y_color_palette_extraction_editor": [
+1440,
+900
+],
+"y_color_palette_extraction_inputs": [
+1440,
+900
+],
+"y_color_palette_extraction_result": [
+1440,
+900
+],
+"y_color_palette_extraction_running": [
+1440,
+900
+],
+"y_icon_set_card": [
+1440,
+900
+],
+"y_icon_set_cost": [
+1440,
+900
+],
+"y_icon_set_editor": [
+1440,
+900
+],
+"y_icon_set_inputs": [
+1440,
+900
+],
+"y_icon_set_outputs": [
+1440,
+900
+],
+"y_icon_set_result": [
+1440,
+900
+],
+"y_icon_set_running": [
+1440,
+900
+],
+"y_image_analysis_card": [
+1440,
+900
+],
+"y_image_analysis_cost": [
+1440,
+900
+],
+"y_image_analysis_editor": [
+1440,
+900
+],
+"y_image_analysis_inputs": [
+1440,
+900
+],
+"y_image_analysis_result": [
+1440,
+900
+],
+"y_image_analysis_running": [
+1440,
+900
+],
+"y_parallel_image_variations_card": [
+1440,
+900
+],
+"y_parallel_image_variations_cost": [
+1440,
+900
+],
+"y_parallel_image_variations_editor": [
+1440,
+900
+],
+"y_parallel_image_variations_inputs": [
+1440,
+900
+],
+"y_parallel_image_variations_outputs": [
+1440,
+900
+],
+"y_parallel_image_variations_result": [
+1440,
+900
+],
+"y_parallel_image_variations_review": [
+1440,
+900
+],
+"y_parallel_image_variations_running": [
+1440,
+900
+],
+"y_parallel_pose_edits_card": [
+1440,
+900
+],
+"y_parallel_pose_edits_cost": [
+1440,
+900
+],
+"y_parallel_pose_edits_editor": [
+1440,
+900
+],
+"y_parallel_pose_edits_inputs": [
+1440,
+900
+],
+"y_parallel_pose_edits_outputs": [
+1440,
+900
+],
+"y_parallel_pose_edits_result": [
+1440,
+900
+],
+"y_parallel_pose_edits_running": [
+1440,
+900
+],
+"y_pose_transfer_card": [
+1440,
+900
+],
+"y_pose_transfer_cost": [
+1440,
+900
+],
+"y_pose_transfer_editor": [
+1440,
+900
+],
+"y_pose_transfer_inputs": [
+1440,
+900
+],
+"y_pose_transfer_outputs": [
+1440,
+900
+],
+"y_pose_transfer_result": [
+1440,
+900
+],
+"y_pose_transfer_review": [
+1440,
+900
+],
+"y_pose_transfer_running": [
+1440,
+900
+],
+"y_seasonal_re_theme_card": [
+1440,
+900
+],
+"y_seasonal_re_theme_editor": [
+1440,
+900
+],
+"y_texture_3d_model_card": [
+1440,
+900
+],
+"y_texture_3d_model_cost": [
+1440,
+900
+],
+"y_texture_3d_model_editor": [
+1440,
+900
+],
+"y_texture_3d_model_inputs": [
+1440,
+900
+],
+"y_texture_3d_model_outputs": [
+1440,
+900
+],
+"y_texture_3d_model_result": [
+1440,
+900
+],
+"y_texture_3d_model_running": [
+1440,
+900
+],
+"y_tileset_card": [
+1440,
+900
+],
+"y_tileset_cost": [
+1440,
+900
+],
+"y_tileset_editor": [
+1440,
+900
+],
+"y_tileset_inputs": [
+1440,
+900
+],
+"y_tileset_outputs": [
+1440,
+900
+],
+"y_tileset_result": [
+1440,
+900
+],
+"y_tileset_running": [
+1440,
+900
+],
+"y_ui_kit_card": [
+1440,
+900
+],
+"y_ui_kit_cost": [
+1440,
+900
+],
+"y_ui_kit_editor": [
+1440,
+900
+],
+"y_ui_kit_inputs": [
+1440,
+900
+],
+"y_ui_kit_result": [
+1440,
+900
+],
+"y_ui_kit_review": [
+1440,
+900
+],
+"y_ui_kit_running": [
+1440,
+900
+],
+"y_seasonal_re_theme_settings": [
+1440,
+900
+],
+"y_seasonal_re_theme_theme": [
+1440,
+900
+],
+"vc_arm": [
+1754,
+1096
+],
+"vc_check": [
+1754,
+1096
+],
+"vc_intensity": [
+1754,
+1096
+],
+"vc_lean": [
+1754,
+1096
+],
+"vc_locks": [
+1754,
+1096
+],
+"vc_open": [
+1754,
+1096
+],
+"vc_play": [
+1754,
+1096
+],
+"vc_save": [
+1754,
+1096
+],
+"vc_speed": [
+1754,
+1096
+],
+"vc_speed2": [
+1754,
+1096
+],
+"vc_tuneall": [
+1754,
+1096
+]
+}

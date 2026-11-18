@@ -1,0 +1,289 @@
+{
+ "Background Removal": {
+  "card": [
+   43.6,
+   42.0,
+   12.8,
+   2.2
+  ],
+  "canvas": [
+   20.6,
+   13.9,
+   58.6,
+   78.7
+  ],
+  "run_btn": [
+   91.6,
+   7.6,
+   3.7,
+   4.9
+  ],
+  "dialog": [
+   30.6,
+   29.0,
+   38.9,
+   42.0
+  ],
+  "check": [
+   59.3,
+   73.4,
+   8.4,
+   4.9
+  ],
+  "cost_dialog": [
+   30.6,
+   23.1,
+   38.9,
+   53.8
+  ],
+  "confirm": [
+   64.0,
+   69.2,
+   3.7,
+   4.9
+  ],
+  "cost_text": "Run Background Removal?\n\nCheck the cost, then run. Nothing is charged until you run.\n\nInputs\n1 image ready \u00b7 all set\nWhat runs\n1 step \u00b7 1 item \u00b7 3\u20139 credits\nWorst case includes automatic retries (up to 2 quality retries per item). You're only charged for what actually runs.\nYour balance\n9,869 credits \u2192 at least 9,860 left\nRun\nGo back\n\nPreview applies when you add more than 2 images.\n\nQuality check",
+  "run_url": "https://rapidassets.ai/workflows/973c6671-82eb-42bb-96dd-ac7970c0e954/runs/e4b8f884-1599-4869-9f87-22ac925f8aa6",
+  "status": null,
+  "downloads": [
+   75.3,
+   50.8,
+   21.2,
+   2.2
+  ]
+ },
+ "Character Facial Pose Sheet": {
+  "card": [
+   57.2,
+   42.0,
+   12.8,
+   2.2
+  ],
+  "canvas": [
+   20.6,
+   13.9,
+   58.6,
+   78.7
+  ],
+  "run_btn": [
+   91.6,
+   7.6,
+   3.7,
+   4.9
+  ],
+  "dialog": [
+   30.6,
+   29.0,
+   38.9,
+   42.0
+  ],
+  "check": [
+   59.3,
+   73.4,
+   8.4,
+   4.9
+  ],
+  "cost_dialog": [
+   30.6,
+   23.1,
+   38.9,
+   53.8
+  ],
+  "confirm": [
+   64.0,
+   69.2,
+   3.7,
+   4.9
+  ],
+  "cost_text": "Run Character Facial Pose Sheet?\n\nCheck the cost, then run. Nothing is charged until you run.\n\nInputs\n1 image ready \u00b7 all set\nWhat runs\n1 step \u00b7 1 item \u00b7 8\u201324 credits\nWorst case includes automatic retries (up to 2 quality retries per item). You're only charged for what actually runs.\nYour balance\n9,823 credits \u2192 at least 9,799 left\nRun\nGo back\n\nPreview applies when you add more than 2 images.\n\nQua",
+  "run_url": "https://rapidassets.ai/workflows/acfe9d18-5528-4e2e-a380-1e92aebc0e32/runs/3f74d3d9-9ec6-4634-a458-e6d2764bc69a",
+  "status": [
+   26.7,
+   16.8,
+   6.1,
+   2.2
+  ],
+  "downloads": [
+   75.3,
+   52.6,
+   21.2,
+   2.2
+  ],
+  "keep": [
+   19.9,
+   130.1,
+   11.6,
+   4.9
+  ]
+ },
+ "Character Turnaround": {
+  "card": [
+   29.9,
+   62.2,
+   12.8,
+   2.2
+  ],
+  "canvas": [
+   20.6,
+   13.9,
+   58.6,
+   78.7
+  ],
+  "run_btn": [
+   91.6,
+   7.6,
+   3.7,
+   4.9
+  ],
+  "dialog": [
+   30.6,
+   29.0,
+   38.9,
+   42.0
+  ],
+  "check": [
+   59.3,
+   73.4,
+   8.4,
+   4.9
+  ],
+  "cost_dialog": [
+   30.6,
+   23.1,
+   38.9,
+   53.8
+  ],
+  "confirm": [
+   64.0,
+   69.2,
+   3.7,
+   4.9
+  ],
+  "cost_text": "Run Character Turnaround?\n\nCheck the cost, then run. Nothing is charged until you run.\n\nInputs\n1 image ready \u00b7 all set\nWhat runs\n1 step \u00b7 1 item \u00b7 8\u201324 credits\nWorst case includes automatic retries (up to 2 quality retries per item). You're only charged for what actually runs.\nYour balance\n9,714 credits \u2192 at least 9,690 left\nRun\nGo back\n\nPreview applies when you add more than 2 images.\n\nQuality ch",
+  "run_url": "https://rapidassets.ai/workflows/a112d4d8-b186-4d56-8bba-74811625159c/runs/6f8b896d-ef5e-46b5-928a-d33f6344256e",
+  "status": [
+   26.7,
+   16.8,
+   6.1,
+   2.2
+  ],
+  "downloads": [
+   75.3,
+   52.6,
+   21.2,
+   2.2
+  ],
+  "keep": [
+   19.9,
+   120.9,
+   11.6,
+   4.9
+  ]
+ },
+ "Color Palette Extraction": {
+  "card": [
+   43.6,
+   62.2,
+   12.8,
+   2.2
+  ],
+  "canvas": [
+   20.6,
+   13.9,
+   58.6,
+   78.7
+  ],
+  "run_btn": [
+   91.6,
+   7.6,
+   3.7,
+   4.9
+  ],
+  "dialog": [
+   30.6,
+   29.0,
+   38.9,
+   42.0
+  ],
+  "check": [
+   59.3,
+   73.4,
+   8.4,
+   4.9
+  ],
+  "cost_dialog": [
+   30.6,
+   23.1,
+   38.9,
+   53.8
+  ],
+  "confirm": [
+   64.0,
+   69.2,
+   3.7,
+   4.9
+  ],
+  "cost_text": "Run Color Palette Extraction?\n\nCheck the cost, then run. Nothing is charged until you run.\n\nInputs\n1 image ready \u00b7 all set\nWhat runs\n2 steps \u00b7 1 item \u00b7 0\u20130 credits\nWorst case includes automatic retries (up to 2 quality retries per item). You're only charged for what actually runs.\nYour balance\n9,621 credits \u2192 at least 9,621 left\nRun\nGo back\n\nPreview applies when you add more than 2 images.\n\nQualit",
+  "run_url": "https://rapidassets.ai/workflows/6d347516-4baf-43ac-9fc5-85116e098af6/runs/0da83ba2-dbde-45c9-9475-f1f77f0c8ecd",
+  "status": null,
+  "downloads": [
+   75.3,
+   50.8,
+   21.2,
+   2.2
+  ]
+ },
+ "Image Analysis": {
+  "card": [
+   29.9,
+   82.4,
+   12.8,
+   2.2
+  ],
+  "canvas": [
+   20.6,
+   13.9,
+   58.6,
+   78.7
+  ],
+  "run_btn": [
+   91.6,
+   7.6,
+   3.7,
+   4.9
+  ],
+  "dialog": [
+   30.6,
+   29.0,
+   38.9,
+   42.0
+  ],
+  "check": [
+   59.3,
+   73.4,
+   8.4,
+   4.9
+  ],
+  "cost_dialog": [
+   30.6,
+   23.1,
+   38.9,
+   53.8
+  ],
+  "confirm": [
+   64.0,
+   69.2,
+   3.7,
+   4.9
+  ],
+  "cost_text": "Run Image Analysis?\n\nCheck the cost, then run. Nothing is charged until you run.\n\nInputs\n1 image ready \u00b7 all set\nWhat runs\n2 steps \u00b7 1 item \u00b7 0\u20130 credits\nWorst case includes automatic retries (up to 2 quality retries per item). You're only charged for what actually runs.\nYour balance\n9,589 credits \u2192 at least 9,589 left\nRun\nGo back\n\nPreview applies when you add more than 2 images.\n\nQuality checks a",
+  "run_url": "https://rapidassets.ai/workflows/a1754515-4867-44c0-aa41-e171bae43ee9/runs/6142d1e2-2ec0-4dcb-886e-cfabb6bb1f36",
+  "status": null,
+  "downloads": [
+   75.3,
+   50.8,
+   21.2,
+   2.2
+  ]
+ }
+}
